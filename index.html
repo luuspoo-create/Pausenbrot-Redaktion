@@ -552,6 +552,43 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   outline: 1px solid var(--accent);
   outline-offset: 1px;
 }
+
+/* Ampel — Cross-Channel-Vollständigkeit (1 → rot, 2-3 → gelb, 4 → grün) */
+.s-amp-red    { color: #C8102E; }
+.s-amp-red    .dot-status { background: #C8102E; }
+.s-amp-yellow { color: #B58A1C; }
+.s-amp-yellow .dot-status { background: #C9A227; }
+.s-amp-green  { color: #4A6B3D; }
+.s-amp-green  .dot-status {
+  background: #5C7A4F;
+  outline: 1px solid #5C7A4F;
+  outline-offset: 1px;
+}
+
+.ampel-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ampel-legend .leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ampel-legend .amp-dot {
+  width: 8px; height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+}
+.ampel-legend .amp-dot--red    { background: #C8102E; }
+.ampel-legend .amp-dot--yellow { background: #C9A227; }
+.ampel-legend .amp-dot--green  { background: #5C7A4F; }
 .empty-day {
   margin: auto 0;
   text-align: center;
@@ -1748,12 +1785,16 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       <h3 class="rubrik-title" id="r1">Diese und die nächsten Wochen</h3>
       <p class="rubrik-deck">Werktage <em>Mo–Fr</em> über vier Wochen. Klick auf einen Tag fügt einen Beitrag hinzu, Drag &amp; Drop verschiebt zwischen Tagen. Typische Post-Tage: <em>Mo · Mi · Fr</em>.</p>
 
-      <div class="cal-legend" aria-label="Kanäle">
+      <div class="cal-legend" aria-label="Kanäle und Ampel">
         <span class="leg"><span class="leg-dot is-substack"></span>Substack</span>
         <span class="leg"><span class="leg-dot is-linkedin"></span>LinkedIn</span>
         <span class="leg"><span class="leg-dot is-instagram"></span>Instagram</span>
         <span class="leg"><span class="leg-dot is-homepage"></span>Homepage</span>
-        <span class="leg" style="margin-left:auto;color:var(--muted-soft);" id="cal-updated">Aktualisiert · 07. Mai 2026</span>
+        <span class="ampel-legend" aria-label="Ampel">
+          <span class="leg"><span class="amp-dot amp-dot--green"></span>4 / 4</span>
+          <span class="leg"><span class="amp-dot amp-dot--yellow"></span>2–3 / 4</span>
+          <span class="leg"><span class="amp-dot amp-dot--red"></span>1 / 4</span>
+        </span>
       </div>
 
       <div id="redaktion-weeks">
@@ -2373,17 +2414,28 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   /* =====================================================
      RENDERING
      ===================================================== */
+  function ampelInfo(entry) {
+    const all = new Set([entry.channel].concat(entry.secondary || []).filter(c => CHANNELS.includes(c)));
+    const count = all.size;
+    let cls, label, title;
+    if (count >= 4)      { cls = 's-amp-green';  label = '4 / 4 Kanäle'; title = 'Vollständig — auf allen vier Kanälen geplant'; }
+    else if (count >= 2) { cls = 's-amp-yellow'; label = count + ' / 4 Kanäle'; title = 'Teilweise — fehlt auf ' + (4 - count) + ' Kanal' + (4 - count === 1 ? '' : 'en'); }
+    else                 { cls = 's-amp-red';    label = '1 / 4 Kanäle'; title = 'Einzelkanal — nur auf ' + (entry.channel || 'einem Kanal') + ' geplant'; }
+    return { cls, label, title, count };
+  }
+
   function renderEntry(e) {
     const eyebrow = e.contentType ? e.channel + ' · ' + e.contentType : e.channel;
     const sec = (e.secondary || []).filter(c => CHANNELS.includes(c) && c !== e.channel);
     const multi = sec.length
       ? '<span class="entry-multi">+ ' + sec.map(c => '<b>' + escapeHtml(c) + '</b>').join(' &middot; ') + '</span>'
       : '';
+    const amp = ampelInfo(e);
     return '' +
       '<div class="entry" draggable="true" data-id="' + escapeHtml(e.id) + '" tabindex="0" role="button" aria-label="Beitrag bearbeiten: ' + escapeHtml(e.title) + '">' +
         '<span class="entry-channel">' + escapeHtml(eyebrow) + '</span>' +
         '<h4 class="entry-title">' + escapeHtml(e.title) + '</h4>' +
-        '<span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>' +
+        '<span class="entry-status ' + amp.cls + '" title="' + escapeHtml(amp.title) + '"><span class="dot-status"></span>' + amp.label + '</span>' +
         multi +
       '</div>';
   }
@@ -2523,6 +2575,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       const d = new Date(e.date + 'T00:00:00');
       const eyebrow = e.contentType ? e.channel + ' · ' + e.contentType : e.channel;
       const kw = 'KW ' + getISOWeek(d);
+      const amp = ampelInfo(e);
       return ''
         + '<article class="cal-row" data-id="' + escapeHtml(e.id) + '">'
           + '<div class="cal-date">'
@@ -2533,6 +2586,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           + '<div class="cal-body">'
             + '<span class="cal-channel">' + escapeHtml(eyebrow) + '</span>'
             + '<h4 class="cal-title">' + escapeHtml(e.title) + '</h4>'
+            + '<span class="entry-status ' + amp.cls + '" title="' + escapeHtml(amp.title) + '"><span class="dot-status"></span>' + amp.label + '</span>'
             + '<a class="cal-cta" href="#" data-edit-id="' + escapeHtml(e.id) + '">Bearbeiten <span>→</span></a>'
           + '</div>'
         + '</article>';
