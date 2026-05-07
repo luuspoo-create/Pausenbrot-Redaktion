@@ -590,6 +590,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 .cal-legend .leg-dot.is-substack  { background: var(--accent); }
 .cal-legend .leg-dot.is-linkedin  { background: var(--ink); }
 .cal-legend .leg-dot.is-instagram { background: transparent; border: 1px solid var(--ink); }
+.cal-legend .leg-dot.is-homepage  { background: transparent; border: 1px solid var(--accent); }
 
 .week-block {
   margin-bottom: 0;
@@ -1316,12 +1317,13 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         <a class="rubrik-link" href="#">Vier Wochen voraus <span>→</span></a>
       </div>
       <h3 class="rubrik-title" id="r1">Diese und die nächsten Wochen</h3>
-      <p class="rubrik-deck">Was wann auf <em>Substack</em>, <em>LinkedIn</em> und <em>Instagram</em> erscheint — die aktuelle Woche und drei Wochen voraus, damit Lücken früh sichtbar werden.</p>
+      <p class="rubrik-deck">Was wann auf <em>Substack</em>, <em>LinkedIn</em>, <em>Instagram</em> und der <em>Homepage</em> erscheint — die aktuelle Woche und drei Wochen voraus, damit Lücken früh sichtbar werden.</p>
 
       <div class="cal-legend" aria-label="Kanäle">
         <span class="leg"><span class="leg-dot is-substack"></span>Substack</span>
         <span class="leg"><span class="leg-dot is-linkedin"></span>LinkedIn</span>
         <span class="leg"><span class="leg-dot is-instagram"></span>Instagram</span>
+        <span class="leg"><span class="leg-dot is-homepage"></span>Homepage</span>
         <span class="leg" style="margin-left:auto;color:var(--muted-soft);">Aktualisiert · 07. Mai 2026</span>
       </div>
 
@@ -1415,10 +1417,10 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           <article class="day" role="listitem">
             <div class="day-head"><span class="day-name">Mo</span><span class="day-num">18<small>Mai</small></span></div>
             <div class="entry">
-              <span class="entry-channel">LinkedIn · Infografik</span>
+              <span class="entry-channel">Homepage · Infografik</span>
               <h4 class="entry-title">Eltern ins Boot holen — der Stufenplan</h4>
               <span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>
-              <span class="entry-multi">+ <b>Homepage</b></span>
+              <span class="entry-multi">+ <b>LinkedIn</b></span>
             </div>
           </article>
           <article class="day" role="listitem">
@@ -1601,7 +1603,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         <div class="rubrik-label">Rubrik <b>03</b> — Kanäle</div>
         <a class="rubrik-link" href="#">Alle Kanäle <span>→</span></a>
       </div>
-      <h3 class="rubrik-title" id="r3">Drei Stimmen, ein Atem</h3>
+      <h3 class="rubrik-title" id="r3">Vier Stimmen, ein Atem</h3>
       <p class="rubrik-deck">Frequenz, Format, nächste Veröffentlichung — pro Kanal in einer Zeile. Instagram steht noch offen, weil in Notion bisher nicht getrackt.</p>
 
       <div class="channels">
@@ -1631,6 +1633,16 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
             <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">00 Beiträge</span></div>
             <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">—</span></div>
             <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val accent">Notion-Lücke</span></div>
+          </div>
+          <span class="channel-arrow" aria-hidden="true">→</span>
+        </article>
+
+        <article class="channel">
+          <div class="channel-name">Homepage<small>digitalespausenbrot.ch</small></div>
+          <div class="channel-stats">
+            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">01 Infografik</span></div>
+            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Mo 18. Mai</span></div>
+            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Lektorat</span></div>
           </div>
           <span class="channel-arrow" aria-hidden="true">→</span>
         </article>
@@ -1773,7 +1785,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           <span class="stat-trend">2 Notion-DBs</span>
         </div>
         <div class="stat">
-          <span class="stat-num">03</span>
+          <span class="stat-num">04</span>
           <span class="stat-label">Aktive Kanäle</span>
           <span class="stat-trend">+ Instagram offen</span>
         </div>
