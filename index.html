@@ -438,7 +438,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 .r-week { grid-column: span 12; }
 .week-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   border-top: 1px solid var(--rule);
   border-left: 1px solid var(--rule-faint);
 }
@@ -1475,7 +1475,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   .pipeline { grid-template-columns: 1fr; }
   .col { border-right: 0; border-bottom: 1px solid var(--rule-faint); }
   .col:last-child { border-bottom: 0; }
-  .week-grid { grid-template-columns: repeat(2, 1fr); }
+  .week-grid { grid-template-columns: repeat(3, 1fr); }
   .day { min-height: 200px; }
   .channel { grid-template-columns: 1fr; gap: 12px; }
   .channel-stats { grid-template-columns: repeat(3, auto); justify-content: start; }
@@ -1626,7 +1626,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         </div>
       </div>
       <h3 class="rubrik-title" id="r1">Diese und die nächsten Wochen</h3>
-      <p class="rubrik-deck">Klick auf einen Tag fügt einen Beitrag hinzu, Klick auf einen Eintrag öffnet den Editor — per Drag &amp; Drop verschiebst du Beiträge zwischen Tagen. Alles bleibt lokal gespeichert.</p>
+      <p class="rubrik-deck">Werktage <em>Mo–Fr</em> über vier Wochen. Klick auf einen Tag fügt einen Beitrag hinzu, Drag &amp; Drop verschiebt zwischen Tagen. Typische Post-Tage: <em>Mo · Mi · Fr</em>.</p>
 
       <div class="cal-legend" aria-label="Kanäle">
         <span class="leg"><span class="leg-dot is-substack"></span>Substack</span>
@@ -1669,14 +1669,6 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
               <span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>
             </div>
           </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">09<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">So</span><span class="day-num">10<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
         </div>
       </div>
 
@@ -1705,14 +1697,6 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           </article>
           <article class="day" role="listitem">
             <div class="day-head"><span class="day-name">Fr</span><span class="day-num">15<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">16<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">So</span><span class="day-num">17<small>Mai</small></span></div>
             <div class="empty-day"><span class="em-dash">—</span></div>
           </article>
         </div>
@@ -1755,14 +1739,6 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
               <span class="entry-multi">+ <b>LinkedIn</b></span>
             </div>
           </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">23<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">So</span><span class="day-num">24<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
         </div>
       </div>
 
@@ -1791,14 +1767,6 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           </article>
           <article class="day" role="listitem">
             <div class="day-head"><span class="day-name">Fr</span><span class="day-num">29<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">30<small>Mai</small></span></div>
-            <div class="empty-day"><span class="em-dash">—</span></div>
-          </article>
-          <article class="day" role="listitem">
-            <div class="day-head"><span class="day-name">So</span><span class="day-num">31<small>Mai</small></span></div>
             <div class="empty-day"><span class="em-dash">—</span></div>
           </article>
         </div>
@@ -2308,7 +2276,8 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
     const weeks = [];
     for (let w = 0; w < WEEKS_TO_SHOW; w++) {
-      weeks.push({ start: addDays(monday, w*7), end: addDays(monday, w*7 + 6), idx: w });
+      // Werktage Mo–Fr only (Wochenende wird nicht angezeigt)
+      weeks.push({ start: addDays(monday, w*7), end: addDays(monday, w*7 + 4), idx: w });
     }
 
     root.innerHTML = weeks.map(week => {
@@ -2319,7 +2288,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       const isCurrent = week.idx === 0;
 
       const days = [];
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < 5; i++) {
         const date = addDays(week.start, i);
         const iso = fmtIso(date);
         const isToday = iso === todayIso;
@@ -2344,7 +2313,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         ? '<span class="week-current">Aktuelle Woche</span>'
         : (count === 0
             ? '<span style="color:var(--muted-soft);">Lücke · 0 Beiträge geplant</span>'
-            : '<span>' + count + ' Beitrag' + (count === 1 ? '' : 'e') + ' geplant</span>');
+            : '<span>' + count + ' ' + (count === 1 ? 'Beitrag' : 'Beiträge') + ' geplant</span>');
 
       return ''
         + '<div class="week-block">'
@@ -2599,20 +2568,30 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         toast('Datum fehlt');
         return;
       }
+      // Snap weekend dates (Sa/So) to next Monday — Kalender zeigt nur Mo–Fr
+      const picked = new Date(data.date + 'T00:00:00');
+      const dow = picked.getDay(); // 0=So, 6=Sa
+      let snapped = false;
+      if (dow === 0 || dow === 6) {
+        const shift = dow === 6 ? 2 : 1; // Sa → +2, So → +1
+        picked.setDate(picked.getDate() + shift);
+        data.date = fmtIso(picked);
+        snapped = true;
+      }
       const id = form.dataset.entryId;
+      let baseMsg;
       if (id) {
         const idx = state.entries.findIndex(e => e.id === id);
-        if (idx >= 0) {
-          state.entries[idx] = Object.assign({}, state.entries[idx], data);
-          toast('Eintrag aktualisiert');
-        }
+        if (idx >= 0) state.entries[idx] = Object.assign({}, state.entries[idx], data);
+        baseMsg = 'Eintrag aktualisiert';
       } else {
         state.entries.push(Object.assign({ id: uid() }, data));
-        toast('Eintrag gespeichert');
+        baseMsg = 'Eintrag gespeichert';
       }
       saveState();
       renderAll();
       closeEditor();
+      toast(snapped ? baseMsg + ' · vom Wochenende auf ' + fmtDateShort(data.date) + ' verschoben' : baseMsg);
     });
 
     // Delete
