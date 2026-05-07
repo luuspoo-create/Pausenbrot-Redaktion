@@ -1102,6 +1102,121 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 }
 
 /* ===========================================================
+   ENTWÜRFE — flat grid with type tags (Substack / Infografik)
+   =========================================================== */
+.drafts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule-faint);
+}
+.draft {
+  border-right: 1px solid var(--rule-faint);
+  border-bottom: 1px solid var(--rule-faint);
+  padding: 22px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--paper);
+  transition: background 0.15s;
+  position: relative;
+}
+.draft:hover { background: var(--paper-soft); }
+.draft-tag {
+  align-self: flex-start;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 4px 10px;
+  margin-bottom: 4px;
+}
+.draft-tag--substack {
+  background: var(--accent);
+  color: var(--paper);
+}
+.draft-tag--infografik {
+  background: var(--ink);
+  color: var(--paper);
+}
+.draft-eyebrow {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.draft-title {
+  font-family: var(--f-head);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.draft-title em { font-style: italic; font-weight: 600; }
+.draft-meta {
+  margin-top: auto;
+  padding-top: 10px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.drafts-foot {
+  padding: 22px 6px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.drafts-foot a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.drafts-foot a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.drafts-foot a span {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.drafts-foot a:hover span { transform: translateX(3px); }
+.drafts-foot-counts {
+  display: inline-flex;
+  gap: 14px;
+  align-items: center;
+}
+.drafts-foot-counts .count-dot {
+  width: 8px; height: 8px;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: 1px;
+}
+.drafts-foot-counts .is-substack { background: var(--accent); }
+.drafts-foot-counts .is-infografik { background: var(--ink); }
+
+@media (max-width: 900px) {
+  .drafts { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .drafts { grid-template-columns: 1fr; }
+}
+
+/* ===========================================================
    RUBRIK 03 — KANÄLE
    =========================================================== */
 .r-channels { grid-column: span 7; }
@@ -1774,106 +1889,107 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       </div><!-- /#redaktion-weeks -->
     </section>
 
-    <!-- =================== RUBRIK 02 — PIPELINE =================== -->
+    <!-- =================== RUBRIK 02 — ENTWÜRFE =================== -->
     <section class="rubrik r-pipeline" aria-labelledby="r2">
       <div class="rubrik-head">
-        <div class="rubrik-label">Rubrik <b>02</b> — Content-Pipeline</div>
-        <a class="rubrik-link" href="#">Zur Pipeline <span>→</span></a>
+        <div class="rubrik-label">Rubrik <b>02</b> — Entwürfe</div>
+        <a class="rubrik-link" href="https://www.notion.so/f4550ee42f264b1e85684557650086c5" target="_blank" rel="noopener">In Notion öffnen <span>→</span></a>
       </div>
       <h3 class="rubrik-title" id="r2">Vom Funken bis zum Druck</h3>
-      <p class="rubrik-deck">Direkt aus den zwei Notion-Datenquellen <em>«📝 Entwürfe Artikel/Infografik»</em> und <em>«📰 Entwürfe Blog/Substack»</em> — gruppiert nach Notion-Status.</p>
+      <p class="rubrik-deck">Alle Einträge aus den Notion-Datenquellen — getaggt als <em>Substack-Artikel</em> oder <em>Homepage-Infografik</em>.</p>
 
-      <div class="pipeline">
+      <div class="drafts">
+        <article class="draft">
+          <span class="draft-tag draft-tag--substack">Substack</span>
+          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
+          <h4 class="draft-title">🆕 <em>Black Box.</em></h4>
+          <span class="draft-meta">Die KI hat eine geheime Regel</span>
+        </article>
 
-        <div class="col col--idea">
-          <div class="col-head">
-            <span class="col-name">Idee</span>
-            <span class="col-count"><b>0</b> Notizen</span>
-          </div>
-          <div class="col-empty">
-            <span class="em-dash" aria-hidden="true">—</span>
-            <p>Backlog leer. Neue Funken wandern aktuell direkt in Lektorat.</p>
-            <small>💡 Idee · Notion-Status</small>
-          </div>
-        </div>
+        <article class="draft">
+          <span class="draft-tag draft-tag--infografik">Infografik</span>
+          <span class="draft-eyebrow">Reflexion</span>
+          <h4 class="draft-title">AI Literacy ist kein Tool-Training</h4>
+          <span class="draft-meta">720 Wörter · LinkedIn Hoch</span>
+        </article>
 
-        <div class="col col--work">
-          <div class="col-head">
-            <span class="col-name">Entwurf bereit</span>
-            <span class="col-count"><b>20</b> in Lektorat</span>
-          </div>
-          <article class="story">
-            <span class="story-num">01</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Homepage <span class="pipe">·</span> Infografik <span class="pipe">·</span> Reflexion</span>
-              <h4 class="story-title">AI Literacy ist kein Tool-Training</h4>
-              <div class="story-meta"><span>720 Wörter</span><span class="vrule"></span><span>LinkedIn-Eignung Hoch</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">02</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel <span class="pipe">·</span> Methoden</span>
-              <h4 class="story-title">🆕 <em>Black Box.</em></h4>
-              <div class="story-meta"><span>Die KI hat eine geheime Regel</span><span class="vrule"></span><span>Lektorat</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">03</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel <span class="pipe">·</span> Methoden</span>
-              <h4 class="story-title">🆕 Bist du noch <em>Bewerter:in</em> oder schon <em>Lektor:in?</em></h4>
-              <div class="story-meta"><span>KI-Glättung als Bewertungs-Frage</span><span class="vrule"></span><span>Lektorat</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">04</span>
-            <div class="story-body">
-              <span class="story-eyebrow">LinkedIn 1:1 <span class="pipe">·</span> Anatomie</span>
-              <h4 class="story-title">«Anatomie eines guten Prompts»</h4>
-              <div class="story-meta"><span>280 Wörter</span><span class="vrule"></span><span>LinkedIn-Eignung Hoch</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">05</span>
-            <div class="story-body">
-              <span class="story-eyebrow">LinkedIn 1:1 <span class="pipe">·</span> Eltern</span>
-              <h4 class="story-title">Der KI-Elternabend — das 60-Minuten-Format</h4>
-              <div class="story-meta"><span>270 Wörter</span><span class="vrule"></span><span>LinkedIn-Eignung Hoch</span></div>
-            </div>
-          </article>
-        </div>
+        <article class="draft">
+          <span class="draft-tag draft-tag--substack">Substack</span>
+          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
+          <h4 class="draft-title">🆕 Bist du noch <em>Bewerter:in</em> oder schon <em>Lektor:in?</em></h4>
+          <span class="draft-meta">KI-Glättung als Bewertungs-Frage</span>
+        </article>
 
-        <div class="col col--ready">
-          <div class="col-head">
-            <span class="col-name">Geplant</span>
-            <span class="col-count"><b>3</b> startklar</span>
-          </div>
-          <article class="story">
-            <span class="story-num">01</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel</span>
-              <h4 class="story-title"><em>Prompt Battle</em></h4>
-              <div class="story-meta"><span class="due">Fr · 08. Mai</span><span class="vrule"></span><span>KW 19</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">02</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Homepage <span class="pipe">·</span> Infografik <span class="pipe">·</span> Eltern</span>
-              <h4 class="story-title">Eltern ins Boot holen — der Stufenplan</h4>
-              <div class="story-meta"><span class="due">Mo · 18. Mai</span><span class="vrule"></span><span>KW 21</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">03</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel</span>
-              <h4 class="story-title">Was meine 9. Klasse heimlich mit <em>ChatGPT</em> macht</h4>
-              <div class="story-meta"><span class="due">Fr · 22. Mai</span><span class="vrule"></span><span>KW 21</span></div>
-            </div>
-          </article>
-        </div>
+        <article class="draft">
+          <span class="draft-tag draft-tag--infografik">Infografik</span>
+          <span class="draft-eyebrow">Anatomie</span>
+          <h4 class="draft-title">«Anatomie eines guten Prompts»</h4>
+          <span class="draft-meta">280 Wörter · LinkedIn Hoch</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--substack">Substack</span>
+          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
+          <h4 class="draft-title">🆕 Hört auf zu fragen, ob <em>KI</em> in den Unterricht gehört</h4>
+          <span class="draft-meta">Provokante These — Hauptartikel</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--infografik">Infografik</span>
+          <span class="draft-eyebrow">Eltern</span>
+          <h4 class="draft-title">Der KI-Elternabend — das 60-Minuten-Format</h4>
+          <span class="draft-meta">270 Wörter · LinkedIn Hoch</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--substack">Substack</span>
+          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
+          <h4 class="draft-title">🆕 <em>KI-Tribunal.</em></h4>
+          <span class="draft-meta">Klasse als Anwaltsteam</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--infografik">Infografik</span>
+          <span class="draft-eyebrow">Statistik</span>
+          <h4 class="draft-title">«+48 % / -17 % / +127 %» — Bastani-RCT in drei Zahlen</h4>
+          <span class="draft-meta">280 Wörter · LinkedIn Hoch</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--substack">Substack</span>
+          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
+          <h4 class="draft-title">🆕 Drei Dinge, die <em>KI</em> mit Lehrpersonen macht</h4>
+          <span class="draft-meta">Über die wir nicht reden</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--infografik">Infografik</span>
+          <span class="draft-eyebrow">Saisonal · Mi</span>
+          <h4 class="draft-title">Sommerferien-Vorbereitung — <em>7 KI-Aufgaben für Juli</em></h4>
+          <span class="draft-meta">280 Wörter · LinkedIn Hoch</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--substack">Substack</span>
+          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
+          <h4 class="draft-title">Was meine 9. Klasse heimlich mit <em>ChatGPT</em> macht</h4>
+          <span class="draft-meta">Klassenumfrage · Selbstversuch</span>
+        </article>
+
+        <article class="draft">
+          <span class="draft-tag draft-tag--infografik">Infografik</span>
+          <span class="draft-eyebrow">Methode</span>
+          <h4 class="draft-title">Schul-KI-Konzept in <em>6 Schritten</em></h4>
+          <span class="draft-meta">A4 Portrait · Reif</span>
+        </article>
+      </div>
+
+      <div class="drafts-foot">
+        <span class="drafts-foot-counts">
+          <span><span class="count-dot is-substack"></span>13 Substack</span>
+          <span><span class="count-dot is-infografik"></span>10 Infografik</span>
+        </span>
+        <span>23 Einträge gesamt · <a href="https://www.notion.so/f4550ee42f264b1e85684557650086c5" target="_blank" rel="noopener">Alle in Notion öffnen <span>→</span></a></span>
       </div>
     </section>
 
