@@ -120,7 +120,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   content: "";
   position: absolute;
   inset: 0;
-  width: 62%;
+  width: 13%;
   background: var(--accent);
 }
 
@@ -661,6 +661,37 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 .col--ready .story-title { color: var(--ink); }
 .col--ready .story:hover .story-title { color: var(--accent); }
 
+.col-empty {
+  padding: 28px 0;
+  text-align: left;
+  border-bottom: 1px solid var(--rule-faint);
+}
+.col-empty .em-dash {
+  font-family: var(--f-head);
+  font-size: 36px;
+  line-height: 1;
+  color: var(--rule-soft);
+  display: block;
+  margin-bottom: 14px;
+}
+.col-empty p {
+  font-family: var(--f-head);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--muted);
+  max-width: 26ch;
+}
+.col-empty small {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+
 /* ===========================================================
    RUBRIK 03 — KANÄLE
    =========================================================== */
@@ -1086,9 +1117,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       </div>
       <div class="dateline-right">
         <span class="dateline-progress">
-          <span>Woche geplant</span>
+          <span>Pipeline</span>
           <span class="dateline-bar" aria-hidden="true"></span>
-          <span><b style="color:var(--ink)">62%</b></span>
+          <span><b style="color:var(--ink)">23 Beiträge</b></span>
         </span>
       </div>
     </div>
@@ -1133,21 +1164,21 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       </div>
     </div>
 
-    <aside class="hero-aside" aria-label="Diese Woche">
+    <aside class="hero-aside" aria-label="Bereit zum Druck">
       <div>
-        <div class="aside-kicker">In dieser Woche</div>
+        <div class="aside-kicker">Bereit zum Druck</div>
         <div class="aside-list">
           <div class="aside-item">
             <div class="aside-num">01</div>
-            <div class="aside-text">Prompt-Battle als LinkedIn-Karussell starten<small>Mo · LinkedIn</small></div>
+            <div class="aside-text"><em>Prompt Battle</em><small>Fr 08. Mai · Substack</small></div>
           </div>
           <div class="aside-item">
             <div class="aside-num">02</div>
-            <div class="aside-text">«KI als Debatte-Gegner» auf den Blog<small>Mi · Blog</small></div>
+            <div class="aside-text">Eltern ins Boot holen — Stufenplan<small>Mo 18. Mai · Homepage</small></div>
           </div>
           <div class="aside-item">
             <div class="aside-num">03</div>
-            <div class="aside-text">Newsletter-Ausgabe Nr. 47<small>Fr · Newsletter</small></div>
+            <div class="aside-text">Was meine 9. Klasse heimlich mit ChatGPT macht<small>Fr 22. Mai · Substack</small></div>
           </div>
         </div>
       </div>
@@ -1192,10 +1223,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
             <span class="day-name">Montag</span>
             <span class="day-num">04<small>Mai</small></span>
           </div>
-          <div class="entry">
-            <span class="entry-channel">LinkedIn · Karussell</span>
-            <h4 class="entry-title"><em>Prompt Battle</em> mit der 9. Klasse</h4>
-            <span class="entry-status s-published"><span class="dot-status"></span>Veröffentlicht</span>
+          <div class="empty-day">
+            <span class="em-dash">—</span>
+            Kein Druck
           </div>
         </article>
 
@@ -1205,15 +1235,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
             <span class="day-name">Dienstag</span>
             <span class="day-num">05<small>Mai</small></span>
           </div>
-          <div class="entry">
-            <span class="entry-channel">Blog · Recherche</span>
-            <h4 class="entry-title">Bibliografie zu Hallucination-Hunts</h4>
-            <span class="entry-status s-draft"><span class="dot-status"></span>Entwurf</span>
-          </div>
-          <div class="entry">
-            <span class="entry-channel">Instagram · Reel</span>
-            <h4 class="entry-title">Aufnahme «Mein KI-Werkzeugkasten»</h4>
-            <span class="entry-status s-draft"><span class="dot-status"></span>Entwurf</span>
+          <div class="empty-day">
+            <span class="em-dash">—</span>
+            Kein Druck
           </div>
         </article>
 
@@ -1223,10 +1247,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
             <span class="day-name">Mittwoch</span>
             <span class="day-num">06<small>Mai</small></span>
           </div>
-          <div class="entry">
-            <span class="entry-channel">Blog · Essay</span>
-            <h4 class="entry-title"><em>KI als Debatte-Gegner</em></h4>
-            <span class="entry-status s-published"><span class="dot-status"></span>Veröffentlicht</span>
+          <div class="empty-day">
+            <span class="em-dash">—</span>
+            Kein Druck
           </div>
         </article>
 
@@ -1237,14 +1260,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
             <span class="day-num">07<small>heute</small></span>
           </div>
           <div class="entry">
-            <span class="entry-channel">Instagram · Reel</span>
-            <h4 class="entry-title">Reel-Skript «Sokratisches Prompting»</h4>
-            <span class="entry-status s-planned"><span class="dot-status"></span>Geplant · 17:00</span>
-          </div>
-          <div class="entry">
-            <span class="entry-channel">LinkedIn · Post</span>
-            <h4 class="entry-title">Kurzpost zum Fehlerbild «Hallu-Stop»</h4>
-            <span class="entry-status s-ready"><span class="dot-status"></span>Bereit</span>
+            <span class="entry-channel">Lektorat · Werktag</span>
+            <h4 class="entry-title">20 Entwürfe in Bearbeitung</h4>
+            <span class="entry-status s-planned"><span class="dot-status"></span>Schreibtag</span>
           </div>
         </article>
 
@@ -1255,9 +1273,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
             <span class="day-num">08<small>Mai</small></span>
           </div>
           <div class="entry">
-            <span class="entry-channel">Newsletter · 47</span>
-            <h4 class="entry-title"><em>Digitales Pausenbrot</em> — Ausgabe 47</h4>
-            <span class="entry-status s-ready"><span class="dot-status"></span>Bereit · 06:30</span>
+            <span class="entry-channel">Substack · Hauptartikel</span>
+            <h4 class="entry-title"><em>Prompt Battle</em></h4>
+            <span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>
           </div>
         </article>
 
@@ -1279,10 +1297,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
             <span class="day-name">Sonntag</span>
             <span class="day-num">10<small>Mai</small></span>
           </div>
-          <div class="entry">
-            <span class="entry-channel">LinkedIn · Wochenrückblick</span>
-            <h4 class="entry-title">Was diese Woche im Klassenzimmer lief</h4>
-            <span class="entry-status s-draft"><span class="dot-status"></span>Entwurf</span>
+          <div class="empty-day">
+            <span class="em-dash">—</span>
+            Pausentag
           </div>
         </article>
       </div>
@@ -1295,115 +1312,96 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         <a class="rubrik-link" href="#">Zur Pipeline <span>→</span></a>
       </div>
       <h3 class="rubrik-title" id="r2">Vom Funken bis zum Druck</h3>
-      <p class="rubrik-deck">Drei Spalten, eine Redaktion. Ideen werden Texte, Texte werden Beiträge.</p>
+      <p class="rubrik-deck">Direkt aus den zwei Notion-Datenquellen <em>«📝 Entwürfe Artikel/Infografik»</em> und <em>«📰 Entwürfe Blog/Substack»</em> — gruppiert nach Notion-Status.</p>
 
       <div class="pipeline">
 
         <div class="col col--idea">
           <div class="col-head">
             <span class="col-name">Idee</span>
-            <span class="col-count"><b>5</b> Notizen</span>
+            <span class="col-count"><b>0</b> Notizen</span>
+          </div>
+          <div class="col-empty">
+            <span class="em-dash" aria-hidden="true">—</span>
+            <p>Backlog leer. Neue Funken wandern aktuell direkt in Lektorat.</p>
+            <small>💡 Idee · Notion-Status</small>
+          </div>
+        </div>
+
+        <div class="col col--work">
+          <div class="col-head">
+            <span class="col-name">Entwurf bereit</span>
+            <span class="col-count"><b>20</b> in Lektorat</span>
           </div>
           <article class="story">
             <span class="story-num">01</span>
             <div class="story-body">
-              <span class="story-eyebrow">LinkedIn <span class="pipe">·</span> Karussell</span>
-              <h4 class="story-title">«Was meine 9. Klasse mit ChatGPT macht»</h4>
-              <div class="story-meta"><span>5 Folien</span><span class="vrule"></span><span>Skizze</span></div>
+              <span class="story-eyebrow">Homepage <span class="pipe">·</span> Infografik <span class="pipe">·</span> Reflexion</span>
+              <h4 class="story-title">AI Literacy ist kein Tool-Training</h4>
+              <div class="story-meta"><span>720 Wörter</span><span class="vrule"></span><span>LinkedIn-Eignung Hoch</span></div>
             </div>
           </article>
           <article class="story">
             <span class="story-num">02</span>
             <div class="story-body">
-              <span class="story-eyebrow">Blog <span class="pipe">·</span> Essay</span>
-              <h4 class="story-title">Warum <em>KI-Detektoren</em> die falsche Antwort sind</h4>
-              <div class="story-meta"><span>~1 200 Wörter</span><span class="vrule"></span><span>Stichworte</span></div>
+              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel <span class="pipe">·</span> Methoden</span>
+              <h4 class="story-title">🆕 <em>Black Box.</em></h4>
+              <div class="story-meta"><span>Die KI hat eine geheime Regel</span><span class="vrule"></span><span>Lektorat</span></div>
             </div>
           </article>
           <article class="story">
             <span class="story-num">03</span>
             <div class="story-body">
-              <span class="story-eyebrow">Newsletter <span class="pipe">·</span> Kolumne</span>
-              <h4 class="story-title">Schulleitung trifft Sprachmodell</h4>
-              <div class="story-meta"><span>Kurzformat</span><span class="vrule"></span><span>Idee</span></div>
+              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel <span class="pipe">·</span> Methoden</span>
+              <h4 class="story-title">🆕 Bist du noch <em>Bewerter:in</em> oder schon <em>Lektor:in?</em></h4>
+              <div class="story-meta"><span>KI-Glättung als Bewertungs-Frage</span><span class="vrule"></span><span>Lektorat</span></div>
             </div>
           </article>
           <article class="story">
             <span class="story-num">04</span>
             <div class="story-body">
-              <span class="story-eyebrow">Instagram <span class="pipe">·</span> Reel</span>
-              <h4 class="story-title">Mein KI-Werkzeugkasten in 60 Sekunden</h4>
-              <div class="story-meta"><span>1 Take</span><span class="vrule"></span><span>Storyboard</span></div>
+              <span class="story-eyebrow">LinkedIn 1:1 <span class="pipe">·</span> Anatomie</span>
+              <h4 class="story-title">«Anatomie eines guten Prompts»</h4>
+              <div class="story-meta"><span>280 Wörter</span><span class="vrule"></span><span>LinkedIn-Eignung Hoch</span></div>
             </div>
           </article>
-        </div>
-
-        <div class="col col--work">
-          <div class="col-head">
-            <span class="col-name">In Arbeit</span>
-            <span class="col-count"><b>3</b> aktiv</span>
-          </div>
           <article class="story">
             <span class="story-num">05</span>
             <div class="story-body">
-              <span class="story-eyebrow">Blog <span class="pipe">·</span> Reportage</span>
-              <h4 class="story-title"><em>Hallucination Hunt</em> im Unterricht</h4>
-              <div class="story-meta"><span class="due">Fällig 09. Mai</span><span class="vrule"></span><span>Rohfassung</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">06</span>
-            <div class="story-body">
-              <span class="story-eyebrow">LinkedIn <span class="pipe">·</span> Carousel</span>
-              <h4 class="story-title">Drei Prompts, die meine Klasse rettet haben</h4>
-              <div class="story-meta"><span class="due">Fällig 12. Mai</span><span class="vrule"></span><span>Lektorat</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">07</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Newsletter <span class="pipe">·</span> Lead</span>
-              <h4 class="story-title">Was Lehrpersonen von Reportern lernen können</h4>
-              <div class="story-meta"><span class="due">Fällig 15. Mai</span><span class="vrule"></span><span>Recherche</span></div>
+              <span class="story-eyebrow">LinkedIn 1:1 <span class="pipe">·</span> Eltern</span>
+              <h4 class="story-title">Der KI-Elternabend — das 60-Minuten-Format</h4>
+              <div class="story-meta"><span>270 Wörter</span><span class="vrule"></span><span>LinkedIn-Eignung Hoch</span></div>
             </div>
           </article>
         </div>
 
         <div class="col col--ready">
           <div class="col-head">
-            <span class="col-name">Bereit</span>
-            <span class="col-count"><b>4</b> startklar</span>
+            <span class="col-name">Geplant</span>
+            <span class="col-count"><b>3</b> startklar</span>
           </div>
           <article class="story">
-            <span class="story-num">08</span>
+            <span class="story-num">01</span>
             <div class="story-body">
-              <span class="story-eyebrow">Newsletter <span class="pipe">·</span> Ausgabe 47</span>
-              <h4 class="story-title">Digitales Pausenbrot — KW 19</h4>
-              <div class="story-meta"><span class="due">Fr · 06:30</span><span class="vrule"></span><span>Geplant</span></div>
+              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel</span>
+              <h4 class="story-title"><em>Prompt Battle</em></h4>
+              <div class="story-meta"><span class="due">Fr · 08. Mai</span><span class="vrule"></span><span>KW 19</span></div>
             </div>
           </article>
           <article class="story">
-            <span class="story-num">09</span>
+            <span class="story-num">02</span>
             <div class="story-body">
-              <span class="story-eyebrow">Blog <span class="pipe">·</span> Lerneinheit</span>
-              <h4 class="story-title"><em>Deep Research</em> als Lernaufgabe</h4>
-              <div class="story-meta"><span class="due">Mi · 10. Mai</span><span class="vrule"></span><span>Lektor freigegeben</span></div>
+              <span class="story-eyebrow">Homepage <span class="pipe">·</span> Infografik <span class="pipe">·</span> Eltern</span>
+              <h4 class="story-title">Eltern ins Boot holen — der Stufenplan</h4>
+              <div class="story-meta"><span class="due">Mo · 18. Mai</span><span class="vrule"></span><span>KW 21</span></div>
             </div>
           </article>
           <article class="story">
-            <span class="story-num">10</span>
+            <span class="story-num">03</span>
             <div class="story-body">
-              <span class="story-eyebrow">LinkedIn <span class="pipe">·</span> Post</span>
-              <h4 class="story-title">Mini-Methode «Hallu-Stop»</h4>
-              <div class="story-meta"><span class="due">Heute · 17:00</span><span class="vrule"></span><span>Bereit</span></div>
-            </div>
-          </article>
-          <article class="story">
-            <span class="story-num">11</span>
-            <div class="story-body">
-              <span class="story-eyebrow">Instagram <span class="pipe">·</span> Karussell</span>
-              <h4 class="story-title">Sieben Prompt-Wörter, die immer ziehen</h4>
-              <div class="story-meta"><span class="due">Sa · 12:00</span><span class="vrule"></span><span>Bereit</span></div>
+              <span class="story-eyebrow">Substack <span class="pipe">·</span> Hauptartikel</span>
+              <h4 class="story-title">Was meine 9. Klasse heimlich mit <em>ChatGPT</em> macht</h4>
+              <div class="story-meta"><span class="due">Fr · 22. Mai</span><span class="vrule"></span><span>KW 21</span></div>
             </div>
           </article>
         </div>
@@ -1421,29 +1419,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
       <div class="channels">
         <article class="channel">
-          <div class="channel-name">LinkedIn<small>Beruflich · Lehrpersonen</small></div>
+          <div class="channel-name">Substack<small>Hauptartikel · wöchentlich</small></div>
           <div class="channel-stats">
-            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">04 Beiträge</span></div>
-            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val accent">Heute, 17:00</span></div>
-            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Aktiv</span></div>
-          </div>
-          <span class="channel-arrow" aria-hidden="true">→</span>
-        </article>
-
-        <article class="channel">
-          <div class="channel-name">Blog<small>digitalespausenbrot.ch</small></div>
-          <div class="channel-stats">
-            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">03 Artikel</span></div>
-            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Mi 10. Mai</span></div>
-            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Lektorat</span></div>
-          </div>
-          <span class="channel-arrow" aria-hidden="true">→</span>
-        </article>
-
-        <article class="channel">
-          <div class="channel-name">Newsletter<small>Substack · wöchentlich</small></div>
-          <div class="channel-stats">
-            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">01 Ausgabe</span></div>
+            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">02 Artikel</span></div>
             <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val accent">Fr 08. Mai</span></div>
             <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Bereit</span></div>
           </div>
@@ -1451,11 +1429,31 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         </article>
 
         <article class="channel">
-          <div class="channel-name">Instagram<small>Visuell · @pausenbrot</small></div>
+          <div class="channel-name">LinkedIn<small>Beruflich · Lehrpersonen</small></div>
           <div class="channel-stats">
-            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">04 Stories</span></div>
-            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Sa 09. Mai</span></div>
-            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Storyboard</span></div>
+            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">02 Beiträge</span></div>
+            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Mo 18. Mai</span></div>
+            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Lektorat</span></div>
+          </div>
+          <span class="channel-arrow" aria-hidden="true">→</span>
+        </article>
+
+        <article class="channel">
+          <div class="channel-name">Homepage<small>digitalespausenbrot.ch</small></div>
+          <div class="channel-stats">
+            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">01 Infografik</span></div>
+            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Mo 18. Mai</span></div>
+            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Lektorat</span></div>
+          </div>
+          <span class="channel-arrow" aria-hidden="true">→</span>
+        </article>
+
+        <article class="channel">
+          <div class="channel-name">Blog<small>Substack-Crossposts</small></div>
+          <div class="channel-stats">
+            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">01 Beitrag</span></div>
+            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Fr 22. Mai</span></div>
+            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Lektorat</span></div>
           </div>
           <span class="channel-arrow" aria-hidden="true">→</span>
         </article>
@@ -1474,108 +1472,108 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       <div class="cal">
         <article class="cal-row">
           <div class="cal-date">
-            <span class="day-num-big">07</span>
-            <span class="month">Mai 2026</span>
-            <span class="weekday">Donnerstag · 17:00</span>
-          </div>
-          <div class="cal-body">
-            <span class="cal-channel">LinkedIn · Post</span>
-            <h4 class="cal-title">Mini-Methode <em>«Hallu-Stop»</em> für den Unterricht</h4>
-            <a class="cal-cta" href="#">Öffnen <span>→</span></a>
-          </div>
-        </article>
-
-        <article class="cal-row">
-          <div class="cal-date">
             <span class="day-num-big">08</span>
             <span class="month">Mai 2026</span>
-            <span class="weekday">Freitag · 06:30</span>
+            <span class="weekday">Freitag · KW 19</span>
           </div>
           <div class="cal-body">
-            <span class="cal-channel">Newsletter · Ausgabe 47</span>
-            <h4 class="cal-title"><em>Digitales Pausenbrot</em> — KW 19</h4>
-            <a class="cal-cta" href="#">Öffnen <span>→</span></a>
+            <span class="cal-channel">Substack · Hauptartikel</span>
+            <h4 class="cal-title"><em>Prompt Battle</em></h4>
+            <a class="cal-cta" href="https://www.notion.so/3457ef2af21981279cd8fe977c0679e8" target="_blank" rel="noopener">In Notion öffnen <span>→</span></a>
           </div>
         </article>
 
         <article class="cal-row">
           <div class="cal-date">
-            <span class="day-num-big">10</span>
+            <span class="day-num-big">18</span>
             <span class="month">Mai 2026</span>
-            <span class="weekday">Mittwoch · 09:00</span>
+            <span class="weekday">Montag · KW 21</span>
           </div>
           <div class="cal-body">
-            <span class="cal-channel">Blog · Lerneinheit</span>
-            <h4 class="cal-title"><em>Deep Research</em> als Lernaufgabe für die Sek 1</h4>
-            <a class="cal-cta" href="#">Öffnen <span>→</span></a>
+            <span class="cal-channel">Homepage · Infografik · Eltern</span>
+            <h4 class="cal-title">Eltern ins Boot holen — der Stufenplan</h4>
+            <a class="cal-cta" href="https://www.notion.so/3557ef2af21981d1ad6ee354ae39ace3" target="_blank" rel="noopener">In Notion öffnen <span>→</span></a>
+          </div>
+        </article>
+
+        <article class="cal-row">
+          <div class="cal-date">
+            <span class="day-num-big">22</span>
+            <span class="month">Mai 2026</span>
+            <span class="weekday">Freitag · KW 21</span>
+          </div>
+          <div class="cal-body">
+            <span class="cal-channel">Substack · Hauptartikel · Methoden</span>
+            <h4 class="cal-title">Was meine 9. Klasse heimlich mit <em>ChatGPT</em> macht</h4>
+            <a class="cal-cta" href="https://www.notion.so/3557ef2af2198199833cf3e09c1e64b1" target="_blank" rel="noopener">In Notion öffnen <span>→</span></a>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- =================== RUBRIK 04 — IDEENARCHIV =================== -->
+    <!-- =================== RUBRIK 04 — IM LEKTORAT =================== -->
     <section class="rubrik r-ideas" aria-labelledby="r4">
       <div class="rubrik-head">
-        <div class="rubrik-label">Rubrik <b>04</b> — Ideenarchiv</div>
-        <a class="rubrik-link" href="#">Vollständiges Archiv <span>→</span></a>
+        <div class="rubrik-label">Rubrik <b>04</b> — Im Lektorat</div>
+        <a class="rubrik-link" href="https://www.notion.so/f4550ee42f264b1e85684557650086c5" target="_blank" rel="noopener">In Notion öffnen <span>→</span></a>
       </div>
-      <h3 class="rubrik-title" id="r4">Funken im Notizbuch</h3>
-      <p class="rubrik-deck">Sammelstelle für noch ungeschriebene Beiträge — sortiert nach Reifegrad.</p>
+      <h3 class="rubrik-title" id="r4">Sieben aus dem Notizbuch</h3>
+      <p class="rubrik-deck">Eine Auswahl aus den 20 Entwürfen, die gerade verdichtet werden — frisch, im Lektorat oder reif für den nächsten Druck.</p>
 
       <div class="ideas">
         <article class="idea">
           <span class="idea-num">001</span>
           <div class="idea-body">
-            <h4 class="idea-title">«KI-Detektoren sind der falsche Weg»</h4>
-            <span class="idea-meta">LinkedIn <span class="pipe">·</span> Essay <span class="pipe">·</span> 7. Mai</span>
+            <h4 class="idea-title">🆕 Hört auf zu fragen, ob <em>KI</em> in den Unterricht gehört</h4>
+            <span class="idea-meta">Substack <span class="pipe">·</span> Hauptartikel <span class="pipe">·</span> Methoden</span>
           </div>
-          <span class="idea-tag">Rohidee</span>
+          <span class="idea-tag">Frisch</span>
         </article>
         <article class="idea">
           <span class="idea-num">002</span>
           <div class="idea-body">
-            <h4 class="idea-title"><em>Prompting sichtbar machen</em> — Klassenzimmer-Demos</h4>
-            <span class="idea-meta">Blog <span class="pipe">·</span> Anleitung <span class="pipe">·</span> 5. Mai</span>
+            <h4 class="idea-title">«+48 % / -17 % / +127 %» — Bastani-RCT in drei Zahlen</h4>
+            <span class="idea-meta">LinkedIn 1:1 <span class="pipe">·</span> Statistik</span>
           </div>
-          <span class="idea-tag tag-shaped">Ausformuliert</span>
+          <span class="idea-tag tag-shaped">Lektorat</span>
         </article>
         <article class="idea">
           <span class="idea-num">003</span>
           <div class="idea-body">
-            <h4 class="idea-title">Was Schreibrituale mit KI gemeinsam haben</h4>
-            <span class="idea-meta">Newsletter <span class="pipe">·</span> Kolumne <span class="pipe">·</span> 4. Mai</span>
+            <h4 class="idea-title">🆕 Drei Dinge, die <em>KI</em> mit Lehrpersonen macht — und über die wir nicht reden</h4>
+            <span class="idea-meta">Substack <span class="pipe">·</span> Hauptartikel <span class="pipe">·</span> Methoden</span>
           </div>
-          <span class="idea-tag">Rohidee</span>
+          <span class="idea-tag">Frisch</span>
         </article>
         <article class="idea">
           <span class="idea-num">004</span>
           <div class="idea-body">
-            <h4 class="idea-title"><em>NotebookLM</em> als Klassenarchiv — ein Selbstversuch</h4>
-            <span class="idea-meta">Blog <span class="pipe">·</span> Reportage <span class="pipe">·</span> 3. Mai</span>
+            <h4 class="idea-title">Sommerferien-Vorbereitung — <em>7 KI-Aufgaben für Juli</em></h4>
+            <span class="idea-meta">LinkedIn 1:1 <span class="pipe">·</span> Saisonal <span class="pipe">·</span> Mi</span>
           </div>
-          <span class="idea-tag tag-ripe">Reif</span>
+          <span class="idea-tag tag-shaped">Lektorat</span>
         </article>
         <article class="idea">
           <span class="idea-num">005</span>
           <div class="idea-body">
-            <h4 class="idea-title">Sokratische Prompts für die 7. Klasse</h4>
-            <span class="idea-meta">LinkedIn <span class="pipe">·</span> Karussell <span class="pipe">·</span> 30. April</span>
+            <h4 class="idea-title">Schul-KI-Konzept in <em>6 Schritten</em></h4>
+            <span class="idea-meta">LinkedIn 1:1 <span class="pipe">·</span> Methode</span>
           </div>
-          <span class="idea-tag tag-shaped">Ausformuliert</span>
+          <span class="idea-tag tag-ripe">Reif</span>
         </article>
         <article class="idea">
           <span class="idea-num">006</span>
           <div class="idea-body">
-            <h4 class="idea-title">Ein Klassengespräch mit Claude — Ton, Reibung, Auswege</h4>
-            <span class="idea-meta">Blog <span class="pipe">·</span> Essay <span class="pipe">·</span> 28. April</span>
+            <h4 class="idea-title">🆕 Was Schulen lernen müssen, <em>BEVOR</em> sie ChatGPT-Lizenzen kaufen</h4>
+            <span class="idea-meta">Substack <span class="pipe">·</span> Hauptartikel <span class="pipe">·</span> Methoden</span>
           </div>
-          <span class="idea-tag">Rohidee</span>
+          <span class="idea-tag">Frisch</span>
         </article>
         <article class="idea">
           <span class="idea-num">007</span>
           <div class="idea-body">
-            <h4 class="idea-title">Wie wir Quellen prüfen, wenn die Quelle ein Modell ist</h4>
-            <span class="idea-meta">Newsletter <span class="pipe">·</span> Leitartikel <span class="pipe">·</span> 22. April</span>
+            <h4 class="idea-title">KI-freie Phasen als <em>didaktischer Gewinn</em></h4>
+            <span class="idea-meta">LinkedIn 1:1 <span class="pipe">·</span> Reflexion</span>
           </div>
           <span class="idea-tag tag-ripe">Reif</span>
         </article>
@@ -1593,9 +1591,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
       <div class="stats">
         <div class="stat stat--accent">
-          <span class="stat-num">12</span>
-          <span class="stat-label">Geplante Beiträge</span>
-          <span class="stat-trend"><span class="arrow">↗</span> +3 ggü. Vorwoche</span>
+          <span class="stat-num">23</span>
+          <span class="stat-label">Beiträge in Pipeline</span>
+          <span class="stat-trend">2 Notion-DBs</span>
         </div>
         <div class="stat">
           <span class="stat-num">04</span>
@@ -1603,14 +1601,14 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           <span class="stat-trend">stabil</span>
         </div>
         <div class="stat">
-          <span class="stat-num">03</span>
-          <span class="stat-label">Offene Entwürfe</span>
+          <span class="stat-num">20</span>
+          <span class="stat-label">Entwürfe in Lektorat</span>
           <span class="stat-trend">in Arbeit</span>
         </div>
         <div class="stat stat--accent">
-          <span class="stat-num">01</span>
-          <span class="stat-label">Newsletter bereit</span>
-          <span class="stat-trend"><span class="arrow">→</span> Versand Fr 06:30</span>
+          <span class="stat-num">03</span>
+          <span class="stat-label">Geplant zum Druck</span>
+          <span class="stat-trend"><span class="arrow">→</span> Nächster Fr 08. Mai</span>
         </div>
       </div>
     </section>
@@ -1619,9 +1617,10 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
     <section class="stats-summary">
       <div class="stats-summary-pip">Notiz der Redaktion</div>
       <p>
-        Eine produktive Woche im Werden: <strong>62 % geplant</strong>, vier Kanäle
-        bespielt, drei Entwürfe warten auf den letzten Schliff. Genug Reibung,
-        um interessant zu bleiben — wenig genug Chaos, um zu Ende zu kommen.
+        Volles Notizbuch: <strong>20 Entwürfe</strong> liegen im Lektorat,
+        drei sind druckfertig — der nächste Versand geht am 8. Mai mit
+        <em>Prompt Battle</em> raus. Backlog-Spalte aktuell leer: neue Funken
+        wandern direkt in die Lektoratsphase.
       </p>
     </section>
 
