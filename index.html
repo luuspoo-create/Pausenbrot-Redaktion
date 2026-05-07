@@ -564,6 +564,108 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   color: var(--rule-soft);
 }
 
+/* Multi-week editorial calendar */
+.cal-legend {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 12px 0 18px;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cal-legend .leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cal-legend .leg-dot {
+  width: 8px; height: 8px;
+  background: var(--ink);
+  display: inline-block;
+}
+.cal-legend .leg-dot.is-substack  { background: var(--accent); }
+.cal-legend .leg-dot.is-linkedin  { background: var(--ink); }
+.cal-legend .leg-dot.is-instagram { background: transparent; border: 1px solid var(--ink); }
+
+.week-block {
+  margin-bottom: 0;
+}
+.week-block + .week-block { margin-top: 28px; }
+.week-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 6px 0 10px;
+  border-bottom: 1px solid var(--rule-soft);
+  margin-bottom: 0;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.week-meta b {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+}
+.week-meta .kw-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.week-meta .pip-current {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.week-meta .week-current {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+.week-block .week-grid {
+  border-top: 0;
+}
+.week-block .day {
+  min-height: 150px;
+  padding: 12px 12px 14px;
+}
+.week-block .day .day-num { font-size: 18px; }
+.week-block .day .day-name { font-size: 10px; }
+.week-block .entry {
+  padding: 8px 0;
+  gap: 3px;
+}
+.week-block .entry-channel { font-size: 9px; }
+.week-block .entry-title { font-size: 13px; line-height: 1.18; }
+.week-block .entry-status { font-size: 9px; }
+.week-block .empty-day { font-size: 9.5px; }
+.week-block .empty-day .em-dash { font-size: 20px; margin-bottom: 4px; }
+
+.entry-multi {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 2px;
+}
+.entry-multi b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
 /* ===========================================================
    RUBRIK 02 — PIPELINE
    =========================================================== */
@@ -1207,101 +1309,186 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   <!-- ============================ GRID ============================ -->
   <main class="grid">
 
-    <!-- =================== RUBRIK 01 — WOCHENPLANUNG =================== -->
+    <!-- =================== RUBRIK 01 — REDAKTIONSKALENDER =================== -->
     <section class="rubrik rubrik--accent r-week" aria-labelledby="r1">
       <div class="rubrik-head">
-        <div class="rubrik-label">Rubrik <b>01</b> — Wochenplanung</div>
-        <a class="rubrik-link" href="#">Zur Wochenansicht <span>→</span></a>
+        <div class="rubrik-label">Rubrik <b>01</b> — Redaktionskalender</div>
+        <a class="rubrik-link" href="#">Vier Wochen voraus <span>→</span></a>
       </div>
-      <h3 class="rubrik-title" id="r1">Diese Woche im Druck</h3>
-      <p class="rubrik-deck">Sieben Tage, vier Kanäle, ein Editorial. Was geplant ist, was läuft, was noch wartet.</p>
+      <h3 class="rubrik-title" id="r1">Diese und die nächsten Wochen</h3>
+      <p class="rubrik-deck">Was wann auf <em>Substack</em>, <em>LinkedIn</em> und <em>Instagram</em> erscheint — die aktuelle Woche und drei Wochen voraus, damit Lücken früh sichtbar werden.</p>
 
-      <div class="week-grid" role="list">
-        <!-- Monday -->
-        <article class="day" role="listitem">
-          <div class="day-head">
-            <span class="day-name">Montag</span>
-            <span class="day-num">04<small>Mai</small></span>
-          </div>
-          <div class="empty-day">
-            <span class="em-dash">—</span>
-            Kein Druck
-          </div>
-        </article>
+      <div class="cal-legend" aria-label="Kanäle">
+        <span class="leg"><span class="leg-dot is-substack"></span>Substack</span>
+        <span class="leg"><span class="leg-dot is-linkedin"></span>LinkedIn</span>
+        <span class="leg"><span class="leg-dot is-instagram"></span>Instagram</span>
+        <span class="leg" style="margin-left:auto;color:var(--muted-soft);">Aktualisiert · 07. Mai 2026</span>
+      </div>
 
-        <!-- Tuesday -->
-        <article class="day" role="listitem">
-          <div class="day-head">
-            <span class="day-name">Dienstag</span>
-            <span class="day-num">05<small>Mai</small></span>
-          </div>
-          <div class="empty-day">
-            <span class="em-dash">—</span>
-            Kein Druck
-          </div>
-        </article>
+      <!-- WEEK 19 (current) -->
+      <div class="week-block">
+        <div class="week-meta">
+          <span class="kw-tag"><span class="pip-current"></span> <b>KW 19</b> · 04.–10. Mai 2026</span>
+          <span class="week-current">Aktuelle Woche</span>
+        </div>
+        <div class="week-grid" role="list">
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mo</span><span class="day-num">04<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Di</span><span class="day-num">05<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mi</span><span class="day-num">06<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day today" role="listitem" aria-current="date">
+            <div class="day-head"><span class="day-name">Do</span><span class="day-num">07<small>heute</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span>Schreibtag</div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Fr</span><span class="day-num">08<small>Mai</small></span></div>
+            <div class="entry">
+              <span class="entry-channel">Substack · Hauptartikel</span>
+              <h4 class="entry-title"><em>Prompt Battle</em></h4>
+              <span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>
+            </div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">09<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">So</span><span class="day-num">10<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+        </div>
+      </div>
 
-        <!-- Wednesday -->
-        <article class="day" role="listitem">
-          <div class="day-head">
-            <span class="day-name">Mittwoch</span>
-            <span class="day-num">06<small>Mai</small></span>
-          </div>
-          <div class="empty-day">
-            <span class="em-dash">—</span>
-            Kein Druck
-          </div>
-        </article>
+      <!-- WEEK 20 -->
+      <div class="week-block">
+        <div class="week-meta">
+          <span class="kw-tag"><b>KW 20</b> · 11.–17. Mai 2026</span>
+          <span style="color:var(--muted-soft);">Lücke · 0 Beiträge geplant</span>
+        </div>
+        <div class="week-grid" role="list">
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mo</span><span class="day-num">11<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Di</span><span class="day-num">12<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mi</span><span class="day-num">13<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Do</span><span class="day-num">14<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Fr</span><span class="day-num">15<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">16<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">So</span><span class="day-num">17<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+        </div>
+      </div>
 
-        <!-- Thursday — TODAY -->
-        <article class="day today" role="listitem" aria-current="date">
-          <div class="day-head">
-            <span class="day-name">Donnerstag</span>
-            <span class="day-num">07<small>heute</small></span>
-          </div>
-          <div class="entry">
-            <span class="entry-channel">Lektorat · Werktag</span>
-            <h4 class="entry-title">20 Entwürfe in Bearbeitung</h4>
-            <span class="entry-status s-planned"><span class="dot-status"></span>Schreibtag</span>
-          </div>
-        </article>
+      <!-- WEEK 21 -->
+      <div class="week-block">
+        <div class="week-meta">
+          <span class="kw-tag"><b>KW 21</b> · 18.–24. Mai 2026</span>
+          <span>2 Beiträge geplant</span>
+        </div>
+        <div class="week-grid" role="list">
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mo</span><span class="day-num">18<small>Mai</small></span></div>
+            <div class="entry">
+              <span class="entry-channel">LinkedIn · Infografik</span>
+              <h4 class="entry-title">Eltern ins Boot holen — der Stufenplan</h4>
+              <span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>
+              <span class="entry-multi">+ <b>Homepage</b></span>
+            </div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Di</span><span class="day-num">19<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mi</span><span class="day-num">20<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Do</span><span class="day-num">21<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Fr</span><span class="day-num">22<small>Mai</small></span></div>
+            <div class="entry">
+              <span class="entry-channel">Substack · Hauptartikel</span>
+              <h4 class="entry-title">Was meine 9. Klasse heimlich mit <em>ChatGPT</em> macht</h4>
+              <span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>
+              <span class="entry-multi">+ <b>LinkedIn</b></span>
+            </div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">23<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">So</span><span class="day-num">24<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+        </div>
+      </div>
 
-        <!-- Friday -->
-        <article class="day" role="listitem">
-          <div class="day-head">
-            <span class="day-name">Freitag</span>
-            <span class="day-num">08<small>Mai</small></span>
-          </div>
-          <div class="entry">
-            <span class="entry-channel">Substack · Hauptartikel</span>
-            <h4 class="entry-title"><em>Prompt Battle</em></h4>
-            <span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>
-          </div>
-        </article>
-
-        <!-- Saturday -->
-        <article class="day" role="listitem">
-          <div class="day-head">
-            <span class="day-name">Samstag</span>
-            <span class="day-num">09<small>Mai</small></span>
-          </div>
-          <div class="empty-day">
-            <span class="em-dash">—</span>
-            Pausentag
-          </div>
-        </article>
-
-        <!-- Sunday -->
-        <article class="day" role="listitem">
-          <div class="day-head">
-            <span class="day-name">Sonntag</span>
-            <span class="day-num">10<small>Mai</small></span>
-          </div>
-          <div class="empty-day">
-            <span class="em-dash">—</span>
-            Pausentag
-          </div>
-        </article>
+      <!-- WEEK 22 -->
+      <div class="week-block">
+        <div class="week-meta">
+          <span class="kw-tag"><b>KW 22</b> · 25.–31. Mai 2026</span>
+          <span style="color:var(--muted-soft);">Lücke · 0 Beiträge geplant</span>
+        </div>
+        <div class="week-grid" role="list">
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mo</span><span class="day-num">25<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Di</span><span class="day-num">26<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Mi</span><span class="day-num">27<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Do</span><span class="day-num">28<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Fr</span><span class="day-num">29<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">Sa</span><span class="day-num">30<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+          <article class="day" role="listitem">
+            <div class="day-head"><span class="day-name">So</span><span class="day-num">31<small>Mai</small></span></div>
+            <div class="empty-day"><span class="em-dash">—</span></div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -1414,8 +1601,8 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         <div class="rubrik-label">Rubrik <b>03</b> — Kanäle</div>
         <a class="rubrik-link" href="#">Alle Kanäle <span>→</span></a>
       </div>
-      <h3 class="rubrik-title" id="r3">Vier Stimmen, ein Atem</h3>
-      <p class="rubrik-deck">Frequenz, Format, nächste Veröffentlichung — pro Kanal in einer Zeile.</p>
+      <h3 class="rubrik-title" id="r3">Drei Stimmen, ein Atem</h3>
+      <p class="rubrik-deck">Frequenz, Format, nächste Veröffentlichung — pro Kanal in einer Zeile. Instagram steht noch offen, weil in Notion bisher nicht getrackt.</p>
 
       <div class="channels">
         <article class="channel">
@@ -1439,21 +1626,11 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
         </article>
 
         <article class="channel">
-          <div class="channel-name">Homepage<small>digitalespausenbrot.ch</small></div>
+          <div class="channel-name">Instagram<small>Visuell · @digitalespausenbrot</small></div>
           <div class="channel-stats">
-            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">01 Infografik</span></div>
-            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Mo 18. Mai</span></div>
-            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Lektorat</span></div>
-          </div>
-          <span class="channel-arrow" aria-hidden="true">→</span>
-        </article>
-
-        <article class="channel">
-          <div class="channel-name">Blog<small>Substack-Crossposts</small></div>
-          <div class="channel-stats">
-            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">01 Beitrag</span></div>
-            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">Fr 22. Mai</span></div>
-            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val">Lektorat</span></div>
+            <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">00 Beiträge</span></div>
+            <div class="cstat"><span class="cstat-key">Nächster</span><span class="cstat-val">—</span></div>
+            <div class="cstat"><span class="cstat-key">Status</span><span class="cstat-val accent">Notion-Lücke</span></div>
           </div>
           <span class="channel-arrow" aria-hidden="true">→</span>
         </article>
@@ -1596,9 +1773,9 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           <span class="stat-trend">2 Notion-DBs</span>
         </div>
         <div class="stat">
-          <span class="stat-num">04</span>
+          <span class="stat-num">03</span>
           <span class="stat-label">Aktive Kanäle</span>
-          <span class="stat-trend">stabil</span>
+          <span class="stat-trend">+ Instagram offen</span>
         </div>
         <div class="stat">
           <span class="stat-num">20</span>
