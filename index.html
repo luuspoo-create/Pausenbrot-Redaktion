@@ -33,7 +33,12 @@
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+.rubrik-title { scroll-margin-top: 96px; }
+.hero, .toolbar { scroll-margin-top: 22px; }
 body {
   background: var(--paper);
   color: var(--ink);
@@ -1625,7 +1630,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 </head>
 <body>
 
-<div class="shell">
+<div class="shell" id="top">
 
   <!-- ============================ MASTHEAD ============================ -->
   <header class="masthead" role="banner">
@@ -1659,12 +1664,12 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
     <div class="rule-double--rev" aria-hidden="true"></div>
 
     <nav class="nav" aria-label="Hauptnavigation">
-      <a href="#" class="active">Übersicht</a>
-      <a href="#">Kalender</a>
-      <a href="#">Ideen</a>
-      <a href="#">Beiträge</a>
-      <a href="#">Kanäle</a>
-      <a href="#">Analyse</a>
+      <a href="#top" data-nav-target="top" class="active">Übersicht</a>
+      <a href="#r1" data-nav-target="r1">Kalender</a>
+      <a href="#r2" data-nav-target="r2">Beiträge</a>
+      <a href="#r3" data-nav-target="r3">Kanäle</a>
+      <a href="#r4" data-nav-target="r4">Lektorat</a>
+      <a href="#r5" data-nav-target="r5">Analyse</a>
     </nav>
   </header>
 
@@ -2840,8 +2845,58 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       if (e.key === 'Escape' && document.activeElement === search) search.blur();
     });
 
+    // Navigation: smooth-scroll + auto-active state
+    setupNav();
+
     // Initial render — replace static HTML with rendered version
     renderAll();
+  }
+
+  function setupNav() {
+    const navLinks = Array.from(document.querySelectorAll('.nav a[data-nav-target]'));
+    if (navLinks.length === 0) return;
+
+    const sectionIds = ['r1', 'r2', 'r3', 'r4', 'r5'];
+    let currentActive = null;
+
+    function setActive(id) {
+      if (id === currentActive) return;
+      currentActive = id;
+      navLinks.forEach(link => link.classList.toggle('active', link.dataset.navTarget === id));
+    }
+
+    // Click → immediate active state (visual snap before smooth-scroll completes)
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => setActive(link.dataset.navTarget));
+    });
+
+    function updateActive() {
+      const scrollY = window.scrollY;
+      // Near the top → Übersicht
+      if (scrollY < 240) {
+        setActive('top');
+        return;
+      }
+      // Otherwise: find the last section whose title has passed the offset line
+      const triggerLine = scrollY + 120;
+      let active = 'top';
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top + scrollY;
+        if (top <= triggerLine) {
+          active = id;
+        } else {
+          break;
+        }
+      }
+      setActive(active);
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    window.addEventListener('resize', updateActive);
+    // Initial calculation
+    updateActive();
   }
 
   if (document.readyState === 'loading') {
