@@ -668,6 +668,312 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 }
 
 /* ===========================================================
+   INTERACTIVE CALENDAR — edit/drag affordances
+   =========================================================== */
+.week-block .day {
+  cursor: pointer;
+  position: relative;
+}
+.day-add {
+  position: absolute;
+  top: 8px; right: 10px;
+  width: 22px; height: 22px;
+  border: 1px solid var(--rule-soft);
+  background: var(--paper);
+  color: var(--muted);
+  font-family: var(--f-mono);
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s, border-color 0.15s, background 0.15s;
+  z-index: 2;
+}
+.week-block .day:hover .day-add { opacity: 1; }
+.day-add:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--paper-soft);
+}
+
+.week-block .entry {
+  cursor: grab;
+  border-bottom: 1px dotted transparent;
+  border-radius: 0;
+  padding: 8px 4px;
+  margin: 0 -4px;
+  transition: background 0.15s;
+}
+.week-block .entry:hover {
+  background: var(--paper-soft);
+}
+.week-block .entry:active { cursor: grabbing; }
+.week-block .entry.is-dragging { opacity: 0.35; }
+
+.day.is-drag-over {
+  background: var(--accent-soft) !important;
+  outline: 2px dashed var(--accent);
+  outline-offset: -3px;
+}
+
+.cal-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: 14px;
+}
+.cal-action-btn {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--rule-soft);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  background: transparent;
+}
+.cal-action-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.cal-action-btn.is-primary {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.cal-action-btn.is-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
+}
+
+/* ===========================================================
+   EDITOR OVERLAY
+   =========================================================== */
+.editor-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23,23,23,0.42);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  animation: editor-fade 0.18s ease-out both;
+}
+.editor-overlay.is-open { display: flex; }
+@keyframes editor-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.editor {
+  background: var(--paper);
+  width: min(520px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+  padding: 30px 32px 26px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+  animation: editor-rise 0.22s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes editor-rise {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.editor-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule-faint);
+}
+.editor-eyebrow {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.editor-title {
+  font-family: var(--f-head);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-top: 6px;
+}
+.editor-close {
+  font-family: var(--f-mono);
+  font-size: 14px;
+  color: var(--muted);
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.editor-close:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.form-row { margin-bottom: 18px; }
+.form-row--inline {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.form-label {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.form-input,
+.form-date {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  padding: 8px 0;
+  background: transparent;
+  font-family: var(--f-body);
+  font-size: 16px;
+  color: var(--ink);
+  outline: none;
+  border-radius: 0;
+}
+.form-input::placeholder { color: var(--muted-soft); font-style: italic; }
+.form-input:focus,
+.form-date:focus { border-bottom-color: var(--accent); }
+.form-date { font-family: var(--f-mono); font-size: 14px; }
+
+.form-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.form-pill {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border: 1px solid var(--rule-soft);
+  color: var(--muted);
+  cursor: pointer;
+  background: transparent;
+  user-select: none;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.form-pill:hover {
+  color: var(--ink);
+  border-color: var(--rule);
+}
+.form-pill.is-active {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.form-pill.is-active.is-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.form-help {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+  margin-top: 6px;
+}
+
+.editor-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule-faint);
+}
+.editor-foot-right { display: flex; gap: 8px; }
+.btn {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  background: transparent;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn-danger {
+  border-color: var(--rule-soft);
+  color: var(--muted);
+}
+.btn-danger:hover {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.btn-primary:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border-top: 2px solid var(--accent);
+  z-index: 1100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.is-on {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 700px) {
+  .form-row--inline { grid-template-columns: 1fr; }
+  .editor { padding: 24px 22px 22px; }
+  .editor-foot { flex-direction: column-reverse; align-items: stretch; gap: 10px; }
+  .editor-foot-right { justify-content: space-between; }
+}
+
+/* ===========================================================
    RUBRIK 02 — PIPELINE
    =========================================================== */
 .r-pipeline { grid-column: span 12; }
@@ -1314,18 +1620,23 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
     <section class="rubrik rubrik--accent r-week" aria-labelledby="r1">
       <div class="rubrik-head">
         <div class="rubrik-label">Rubrik <b>01</b> — Redaktionskalender</div>
-        <a class="rubrik-link" href="#">Vier Wochen voraus <span>→</span></a>
+        <div class="cal-actions">
+          <button type="button" class="cal-action-btn" data-action="reset" title="Auf Notion-Snapshot zurücksetzen">↻ Zurücksetzen</button>
+          <button type="button" class="cal-action-btn is-primary" data-action="add">+ Neuer Beitrag</button>
+        </div>
       </div>
       <h3 class="rubrik-title" id="r1">Diese und die nächsten Wochen</h3>
-      <p class="rubrik-deck">Was wann auf <em>Substack</em>, <em>LinkedIn</em>, <em>Instagram</em> und der <em>Homepage</em> erscheint — die aktuelle Woche und drei Wochen voraus, damit Lücken früh sichtbar werden.</p>
+      <p class="rubrik-deck">Klick auf einen Tag fügt einen Beitrag hinzu, Klick auf einen Eintrag öffnet den Editor — per Drag &amp; Drop verschiebst du Beiträge zwischen Tagen. Alles bleibt lokal gespeichert.</p>
 
       <div class="cal-legend" aria-label="Kanäle">
         <span class="leg"><span class="leg-dot is-substack"></span>Substack</span>
         <span class="leg"><span class="leg-dot is-linkedin"></span>LinkedIn</span>
         <span class="leg"><span class="leg-dot is-instagram"></span>Instagram</span>
         <span class="leg"><span class="leg-dot is-homepage"></span>Homepage</span>
-        <span class="leg" style="margin-left:auto;color:var(--muted-soft);">Aktualisiert · 07. Mai 2026</span>
+        <span class="leg" style="margin-left:auto;color:var(--muted-soft);" id="cal-updated">Aktualisiert · 07. Mai 2026</span>
       </div>
+
+      <div id="redaktion-weeks">
 
       <!-- WEEK 19 (current) -->
       <div class="week-block">
@@ -1492,6 +1803,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           </article>
         </div>
       </div>
+      </div><!-- /#redaktion-weeks -->
     </section>
 
     <!-- =================== RUBRIK 02 — PIPELINE =================== -->
@@ -1606,8 +1918,8 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       <h3 class="rubrik-title" id="r3">Vier Stimmen, ein Atem</h3>
       <p class="rubrik-deck">Frequenz, Format, nächste Veröffentlichung — pro Kanal in einer Zeile. Instagram steht noch offen, weil in Notion bisher nicht getrackt.</p>
 
-      <div class="channels">
-        <article class="channel">
+      <div class="channels" id="channel-list">
+        <article class="channel" data-channel="Substack">
           <div class="channel-name">Substack<small>Hauptartikel · wöchentlich</small></div>
           <div class="channel-stats">
             <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">02 Artikel</span></div>
@@ -1617,7 +1929,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           <span class="channel-arrow" aria-hidden="true">→</span>
         </article>
 
-        <article class="channel">
+        <article class="channel" data-channel="LinkedIn">
           <div class="channel-name">LinkedIn<small>Beruflich · Lehrpersonen</small></div>
           <div class="channel-stats">
             <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">02 Beiträge</span></div>
@@ -1627,7 +1939,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           <span class="channel-arrow" aria-hidden="true">→</span>
         </article>
 
-        <article class="channel">
+        <article class="channel" data-channel="Instagram">
           <div class="channel-name">Instagram<small>Visuell · @digitalespausenbrot</small></div>
           <div class="channel-stats">
             <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">00 Beiträge</span></div>
@@ -1637,7 +1949,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           <span class="channel-arrow" aria-hidden="true">→</span>
         </article>
 
-        <article class="channel">
+        <article class="channel" data-channel="Homepage">
           <div class="channel-name">Homepage<small>digitalespausenbrot.ch</small></div>
           <div class="channel-stats">
             <div class="cstat"><span class="cstat-key">Geplant</span><span class="cstat-val">01 Infografik</span></div>
@@ -1658,7 +1970,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       <h3 class="rubrik-title" id="r-cal">Was als Nächstes erscheint</h3>
       <p class="rubrik-deck">Drei Veröffentlichungen, in der Reihenfolge ihres Druckdatums.</p>
 
-      <div class="cal">
+      <div class="cal" id="cal-teaser">
         <article class="cal-row">
           <div class="cal-date">
             <span class="day-num-big">08</span>
@@ -1778,23 +2090,23 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       <h3 class="rubrik-title" id="r5">Eine Woche in Ziffern</h3>
       <p class="rubrik-deck">Keine Diagramme, nur die Zahlen, die wirklich tragen.</p>
 
-      <div class="stats">
-        <div class="stat stat--accent">
+      <div class="stats" id="stats-grid">
+        <div class="stat stat--accent" data-stat="pipeline">
           <span class="stat-num">23</span>
           <span class="stat-label">Beiträge in Pipeline</span>
           <span class="stat-trend">2 Notion-DBs</span>
         </div>
-        <div class="stat">
+        <div class="stat" data-stat="channels">
           <span class="stat-num">04</span>
           <span class="stat-label">Aktive Kanäle</span>
           <span class="stat-trend">+ Instagram offen</span>
         </div>
-        <div class="stat">
+        <div class="stat" data-stat="drafts">
           <span class="stat-num">20</span>
           <span class="stat-label">Entwürfe in Lektorat</span>
           <span class="stat-trend">in Arbeit</span>
         </div>
-        <div class="stat stat--accent">
+        <div class="stat stat--accent" data-stat="planned">
           <span class="stat-num">03</span>
           <span class="stat-label">Geplant zum Druck</span>
           <span class="stat-trend"><span class="arrow">→</span> Nächster Fr 08. Mai</span>
@@ -1833,24 +2145,615 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
 </div>
 
-<script>
-// Lightweight chip filter (visual only — no data wiring)
-(function () {
-  const chips = document.querySelectorAll('.chip');
-  chips.forEach(c => c.addEventListener('click', () => {
-    chips.forEach(x => x.classList.remove('active'));
-    c.classList.add('active');
-  }));
+<!-- ============================ EDITOR OVERLAY ============================ -->
+<div class="editor-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="editor-title">
+  <form class="editor" id="editor-form" novalidate>
+    <div class="editor-head">
+      <div>
+        <div class="editor-eyebrow" id="editor-eyebrow">Beitrag</div>
+        <h2 class="editor-title" id="editor-title">Neuer Eintrag</h2>
+      </div>
+      <button type="button" class="editor-close" data-action="close" aria-label="Schliessen">✕</button>
+    </div>
 
-  // ⌘K focus search
-  const search = document.querySelector('.search input');
-  document.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      search && search.focus();
+    <div class="form-row">
+      <label class="form-label" for="f-title">Titel</label>
+      <input type="text" class="form-input" id="f-title" name="title" placeholder="z. B. Prompt Battle" required maxlength="160">
+    </div>
+
+    <div class="form-row form-row--inline">
+      <div>
+        <label class="form-label" for="f-date">Datum</label>
+        <input type="date" class="form-date" id="f-date" name="date" required>
+      </div>
+      <div>
+        <label class="form-label" for="f-content">Format / Inhalt</label>
+        <input type="text" class="form-input" id="f-content" name="contentType" placeholder="z. B. Hauptartikel" maxlength="80">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Hauptkanal</label>
+      <div class="form-pills" data-group="channel">
+        <button type="button" class="form-pill" data-value="Substack">Substack</button>
+        <button type="button" class="form-pill" data-value="LinkedIn">LinkedIn</button>
+        <button type="button" class="form-pill" data-value="Instagram">Instagram</button>
+        <button type="button" class="form-pill" data-value="Homepage">Homepage</button>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Cross-Posts</label>
+      <div class="form-pills" data-group="secondary">
+        <button type="button" class="form-pill" data-value="Substack">Substack</button>
+        <button type="button" class="form-pill" data-value="LinkedIn">LinkedIn</button>
+        <button type="button" class="form-pill" data-value="Instagram">Instagram</button>
+        <button type="button" class="form-pill" data-value="Homepage">Homepage</button>
+      </div>
+      <p class="form-help">Optional — Kanäle, auf denen der Beitrag zusätzlich erscheint.</p>
+    </div>
+
+    <div class="editor-foot">
+      <button type="button" class="btn btn-danger" data-action="delete" hidden>Löschen</button>
+      <div class="editor-foot-right">
+        <button type="button" class="btn" data-action="cancel">Abbrechen</button>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =====================================================
+     CONFIG & STATE
+     ===================================================== */
+  const STORAGE_KEY = 'pausenbrot-redaktion-v1';
+  const CHANNELS = ['Substack', 'LinkedIn', 'Instagram', 'Homepage'];
+  const WEEKS_TO_SHOW = 4;
+
+  // Default snapshot (matches the static HTML on initial load)
+  const DEFAULT_ENTRIES = [
+    { id: 'n1', date: '2026-05-08', channel: 'Substack', secondary: [],            contentType: 'Hauptartikel', title: 'Prompt Battle' },
+    { id: 'n2', date: '2026-05-18', channel: 'Homepage', secondary: ['LinkedIn'],  contentType: 'Infografik',   title: 'Eltern ins Boot holen — der Stufenplan' },
+    { id: 'n3', date: '2026-05-22', channel: 'Substack', secondary: ['LinkedIn'],  contentType: 'Hauptartikel', title: 'Was meine 9. Klasse heimlich mit ChatGPT macht' }
+  ];
+
+  // Anchor "today" — uses real date, but if no entries match the visible window
+  // and DEFAULTs are present, anchor to 2026-05-07 so the snapshot stays sensible
+  let TODAY = new Date();
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.entries)) return parsed;
+      }
+    } catch (e) { /* fall through */ }
+    return { entries: clone(DEFAULT_ENTRIES) };
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    catch (e) { console.warn('Konnte nicht speichern:', e); }
+  }
+
+  function clone(x) { return JSON.parse(JSON.stringify(x)); }
+  function uid() { return 'e' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-3); }
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  let state = loadState();
+
+  /* =====================================================
+     DATE UTILITIES (ISO week, Mon-anchored)
+     ===================================================== */
+  function getMondayOf(d) {
+    const x = new Date(d);
+    const day = x.getDay() || 7;
+    x.setDate(x.getDate() - day + 1);
+    x.setHours(0,0,0,0);
+    return x;
+  }
+  function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function fmtIso(d) { return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()); }
+  function fmtDayNum(d) { return pad(d.getDate()); }
+  const MONTHS = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+  const MONTHS_LONG = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const WEEKDAYS = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const WEEKDAYS_LONG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  function fmtMonth(d)  { return MONTHS[d.getMonth()]; }
+  function fmtMonthLong(d) { return MONTHS_LONG[d.getMonth()]; }
+  function dayLabel(d) { return WEEKDAYS[d.getDay()]; }
+  function dayLabelLong(d) { return WEEKDAYS_LONG[d.getDay()]; }
+  function fmtRange(a, b) { return fmtDayNum(a) + '.–' + fmtDayNum(b) + '. ' + fmtMonth(b) + ' ' + b.getFullYear(); }
+  function getISOWeek(d) {
+    const t = new Date(d.getTime()); t.setHours(0,0,0,0);
+    t.setDate(t.getDate() + 3 - (t.getDay()+6) % 7);
+    const w1 = new Date(t.getFullYear(), 0, 4);
+    return 1 + Math.round(((t - w1) / 86400000 - 3 + (w1.getDay()+6) % 7) / 7);
+  }
+
+  /* =====================================================
+     RENDERING
+     ===================================================== */
+  function renderEntry(e) {
+    const eyebrow = e.contentType ? e.channel + ' · ' + e.contentType : e.channel;
+    const sec = (e.secondary || []).filter(c => CHANNELS.includes(c) && c !== e.channel);
+    const multi = sec.length
+      ? '<span class="entry-multi">+ ' + sec.map(c => '<b>' + escapeHtml(c) + '</b>').join(' &middot; ') + '</span>'
+      : '';
+    return '' +
+      '<div class="entry" draggable="true" data-id="' + escapeHtml(e.id) + '" tabindex="0" role="button" aria-label="Beitrag bearbeiten: ' + escapeHtml(e.title) + '">' +
+        '<span class="entry-channel">' + escapeHtml(eyebrow) + '</span>' +
+        '<h4 class="entry-title">' + escapeHtml(e.title) + '</h4>' +
+        '<span class="entry-status s-ready"><span class="dot-status"></span>Geplant</span>' +
+        multi +
+      '</div>';
+  }
+
+  function renderCalendar() {
+    const root = document.getElementById('redaktion-weeks');
+    if (!root) return;
+
+    const monday = getMondayOf(TODAY);
+    const todayIso = fmtIso(TODAY);
+
+    const weeks = [];
+    for (let w = 0; w < WEEKS_TO_SHOW; w++) {
+      weeks.push({ start: addDays(monday, w*7), end: addDays(monday, w*7 + 6), idx: w });
     }
-    if (e.key === 'Escape' && document.activeElement === search) search.blur();
-  });
+
+    root.innerHTML = weeks.map(week => {
+      const startIso = fmtIso(week.start);
+      const endIso = fmtIso(week.end);
+      const weekEntries = state.entries.filter(e => e.date >= startIso && e.date <= endIso);
+      const kw = getISOWeek(week.start);
+      const isCurrent = week.idx === 0;
+
+      const days = [];
+      for (let i = 0; i < 7; i++) {
+        const date = addDays(week.start, i);
+        const iso = fmtIso(date);
+        const isToday = iso === todayIso;
+        const dayEntries = weekEntries.filter(e => e.date === iso);
+
+        days.push(''
+          + '<article class="day' + (isToday ? ' today' : '') + '" data-date="' + iso + '" role="listitem"' + (isToday ? ' aria-current="date"' : '') + '>'
+            + '<button class="day-add" type="button" data-add-date="' + iso + '" aria-label="Beitrag am ' + dayLabelLong(date) + ' ' + fmtDayNum(date) + '. ' + fmtMonthLong(date) + ' anlegen">+</button>'
+            + '<div class="day-head">'
+              + '<span class="day-name">' + dayLabel(date) + '</span>'
+              + '<span class="day-num">' + fmtDayNum(date) + '<small>' + (isToday ? 'heute' : fmtMonth(date)) + '</small></span>'
+            + '</div>'
+            + (dayEntries.length === 0
+                ? '<div class="empty-day"><span class="em-dash">—</span></div>'
+                : dayEntries.map(renderEntry).join(''))
+          + '</article>'
+        );
+      }
+
+      const count = weekEntries.length;
+      const headRight = isCurrent
+        ? '<span class="week-current">Aktuelle Woche</span>'
+        : (count === 0
+            ? '<span style="color:var(--muted-soft);">Lücke · 0 Beiträge geplant</span>'
+            : '<span>' + count + ' Beitrag' + (count === 1 ? '' : 'e') + ' geplant</span>');
+
+      return ''
+        + '<div class="week-block">'
+          + '<div class="week-meta">'
+            + '<span class="kw-tag">' + (isCurrent ? '<span class="pip-current"></span> ' : '') + '<b>KW ' + kw + '</b> · ' + fmtRange(week.start, week.end) + '</span>'
+            + headRight
+          + '</div>'
+          + '<div class="week-grid" role="list">' + days.join('') + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function nextEntryFor(channel) {
+    const todayIso = fmtIso(TODAY);
+    const upcoming = state.entries
+      .filter(e => e.date >= todayIso)
+      .filter(e => e.channel === channel || (e.secondary || []).includes(channel))
+      .sort((a, b) => a.date.localeCompare(b.date));
+    return upcoming[0] || null;
+  }
+
+  function countFor(channel) {
+    const todayIso = fmtIso(TODAY);
+    return state.entries
+      .filter(e => e.date >= todayIso)
+      .filter(e => e.channel === channel || (e.secondary || []).includes(channel))
+      .length;
+  }
+
+  function fmtDateShort(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso + 'T00:00:00');
+    return dayLabel(d) + ' ' + fmtDayNum(d) + '. ' + fmtMonth(d);
+  }
+
+  function renderChannels() {
+    document.querySelectorAll('.channel[data-channel]').forEach(card => {
+      const ch = card.dataset.channel;
+      const count = countFor(ch);
+      const next = nextEntryFor(ch);
+      const stats = card.querySelectorAll('.cstat .cstat-val');
+      if (!stats[0] || !stats[1] || !stats[2]) return;
+
+      const unit = ch === 'Substack' ? (count === 1 ? 'Artikel' : 'Artikel')
+                : ch === 'Homepage' ? (count === 1 ? 'Infografik' : 'Infografiken')
+                : (count === 1 ? 'Beitrag' : 'Beiträge');
+
+      stats[0].textContent = pad(count) + ' ' + unit;
+
+      stats[1].textContent = next ? fmtDateShort(next.date) : '—';
+      // Highlight nächster in accent if it's the closest across all channels
+      stats[1].classList.toggle('accent', !!(next && isClosestPlanned(next)));
+
+      let status, statusAccent = false;
+      if (count === 0) { status = 'Notion-Lücke'; statusAccent = true; }
+      else if (next && new Date(next.date) - TODAY < 7 * 86400000) { status = 'Bereit'; }
+      else { status = 'Lektorat'; }
+      stats[2].textContent = status;
+      stats[2].classList.toggle('accent', statusAccent);
+    });
+  }
+
+  function isClosestPlanned(entry) {
+    const todayIso = fmtIso(TODAY);
+    const upcoming = state.entries
+      .filter(e => e.date >= todayIso)
+      .sort((a,b) => a.date.localeCompare(b.date));
+    return upcoming[0] && upcoming[0].id === entry.id;
+  }
+
+  function renderTeaser() {
+    const root = document.getElementById('cal-teaser');
+    if (!root) return;
+    const todayIso = fmtIso(TODAY);
+    const upcoming = state.entries
+      .filter(e => e.date >= todayIso)
+      .sort((a,b) => a.date.localeCompare(b.date))
+      .slice(0, 3);
+
+    if (upcoming.length === 0) {
+      root.innerHTML = '<div style="padding:32px 6px;font-family:var(--f-head);font-style:italic;color:var(--muted);">Keine Veröffentlichungen geplant — Zeit für einen neuen Eintrag.</div>';
+      return;
+    }
+
+    root.innerHTML = upcoming.map(e => {
+      const d = new Date(e.date + 'T00:00:00');
+      const eyebrow = e.contentType ? e.channel + ' · ' + e.contentType : e.channel;
+      const kw = 'KW ' + getISOWeek(d);
+      return ''
+        + '<article class="cal-row" data-id="' + escapeHtml(e.id) + '">'
+          + '<div class="cal-date">'
+            + '<span class="day-num-big">' + fmtDayNum(d) + '</span>'
+            + '<span class="month">' + fmtMonth(d) + ' ' + d.getFullYear() + '</span>'
+            + '<span class="weekday">' + dayLabelLong(d) + ' · ' + kw + '</span>'
+          + '</div>'
+          + '<div class="cal-body">'
+            + '<span class="cal-channel">' + escapeHtml(eyebrow) + '</span>'
+            + '<h4 class="cal-title">' + escapeHtml(e.title) + '</h4>'
+            + '<a class="cal-cta" href="#" data-edit-id="' + escapeHtml(e.id) + '">Bearbeiten <span>→</span></a>'
+          + '</div>'
+        + '</article>';
+    }).join('');
+  }
+
+  function renderStats() {
+    const todayIso = fmtIso(TODAY);
+    const planned = state.entries.filter(e => e.date >= todayIso);
+    const next = planned.sort((a,b) => a.date.localeCompare(b.date))[0];
+    const channelsActive = new Set();
+    planned.forEach(e => {
+      channelsActive.add(e.channel);
+      (e.secondary || []).forEach(c => channelsActive.add(c));
+    });
+
+    const set = (sel, num, trend) => {
+      const card = document.querySelector('.stat[data-stat="' + sel + '"]');
+      if (!card) return;
+      const n = card.querySelector('.stat-num');
+      const t = card.querySelector('.stat-trend');
+      if (n) n.textContent = num;
+      if (t && trend != null) t.innerHTML = trend;
+    };
+
+    set('planned', pad(planned.length), next
+      ? '<span class="arrow">→</span> Nächster ' + fmtDateShort(next.date)
+      : 'aktuell keine');
+
+    set('channels', pad(channelsActive.size || 0), channelsActive.has('Instagram')
+      ? 'Instagram aktiv'
+      : '+ Instagram offen');
+
+    // Updated label
+    const upd = document.getElementById('cal-updated');
+    if (upd) {
+      const d = new Date();
+      upd.textContent = 'Aktualisiert · ' + fmtDayNum(d) + '. ' + fmtMonthLong(d) + ' ' + d.getFullYear();
+    }
+  }
+
+  function renderAll() {
+    renderCalendar();
+    renderChannels();
+    renderTeaser();
+    renderStats();
+  }
+
+  /* =====================================================
+     EDITOR
+     ===================================================== */
+  const overlay = document.querySelector('.editor-overlay');
+  const form = document.getElementById('editor-form');
+
+  function openEditor(opts) {
+    opts = opts || {};
+    const isEdit = !!opts.id;
+    const entry = isEdit
+      ? state.entries.find(e => e.id === opts.id)
+      : { id: '', date: opts.date || fmtIso(TODAY), channel: opts.channel || 'Substack', secondary: [], title: '', contentType: '' };
+
+    if (!entry) return;
+
+    form.querySelector('#f-title').value = entry.title || '';
+    form.querySelector('#f-date').value = entry.date;
+    form.querySelector('#f-content').value = entry.contentType || '';
+
+    form.querySelectorAll('[data-group="channel"] .form-pill').forEach(p => {
+      const active = p.dataset.value === entry.channel;
+      p.classList.toggle('is-active', active);
+      p.classList.toggle('is-primary', active);
+    });
+    form.querySelectorAll('[data-group="secondary"] .form-pill').forEach(p => {
+      p.classList.toggle('is-active', (entry.secondary || []).includes(p.dataset.value));
+    });
+
+    form.dataset.entryId = entry.id || '';
+    form.querySelector('[data-action="delete"]').hidden = !isEdit;
+    document.getElementById('editor-eyebrow').textContent = isEdit ? 'Beitrag bearbeiten' : 'Neuer Beitrag';
+    document.getElementById('editor-title').textContent = isEdit ? 'Eintrag bearbeiten' : 'Neuer Eintrag';
+
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    setTimeout(() => form.querySelector('#f-title').focus(), 60);
+  }
+
+  function closeEditor() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    form.reset();
+  }
+
+  function readForm() {
+    const fd = new FormData(form);
+    const channelPill = form.querySelector('[data-group="channel"] .form-pill.is-active');
+    const channel = channelPill ? channelPill.dataset.value : 'Substack';
+    const secondary = Array.from(form.querySelectorAll('[data-group="secondary"] .form-pill.is-active'))
+      .map(p => p.dataset.value)
+      .filter(c => c !== channel);
+
+    return {
+      title: (fd.get('title') || '').toString().trim(),
+      date: (fd.get('date') || '').toString(),
+      contentType: (fd.get('contentType') || '').toString().trim(),
+      channel,
+      secondary
+    };
+  }
+
+  /* =====================================================
+     TOAST
+     ===================================================== */
+  let toastTimer = null;
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('is-on'), 2200);
+  }
+
+  /* =====================================================
+     INIT — wire up handlers
+     ===================================================== */
+  function init() {
+    // Pill toggles
+    overlay.addEventListener('click', e => {
+      const pill = e.target.closest('.form-pill');
+      if (!pill) return;
+      const group = pill.parentElement.dataset.group;
+      if (group === 'channel') {
+        pill.parentElement.querySelectorAll('.form-pill').forEach(p => {
+          p.classList.remove('is-active');
+          p.classList.remove('is-primary');
+        });
+        pill.classList.add('is-active');
+        pill.classList.add('is-primary');
+      } else if (group === 'secondary') {
+        pill.classList.toggle('is-active');
+      }
+    });
+
+    // Submit form
+    form.addEventListener('submit', ev => {
+      ev.preventDefault();
+      const data = readForm();
+      if (!data.title) {
+        toast('Titel fehlt');
+        form.querySelector('#f-title').focus();
+        return;
+      }
+      if (!data.date) {
+        toast('Datum fehlt');
+        return;
+      }
+      const id = form.dataset.entryId;
+      if (id) {
+        const idx = state.entries.findIndex(e => e.id === id);
+        if (idx >= 0) {
+          state.entries[idx] = Object.assign({}, state.entries[idx], data);
+          toast('Eintrag aktualisiert');
+        }
+      } else {
+        state.entries.push(Object.assign({ id: uid() }, data));
+        toast('Eintrag gespeichert');
+      }
+      saveState();
+      renderAll();
+      closeEditor();
+    });
+
+    // Delete
+    form.querySelector('[data-action="delete"]').addEventListener('click', () => {
+      const id = form.dataset.entryId;
+      if (!id) return;
+      if (!confirm('Diesen Eintrag löschen?')) return;
+      state.entries = state.entries.filter(e => e.id !== id);
+      saveState();
+      renderAll();
+      closeEditor();
+      toast('Eintrag gelöscht');
+    });
+
+    // Cancel / Close
+    overlay.querySelectorAll('[data-action="cancel"], [data-action="close"]').forEach(b => {
+      b.addEventListener('click', closeEditor);
+    });
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeEditor();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeEditor();
+    });
+
+    // Click empty day → new entry. Click entry → edit.
+    document.body.addEventListener('click', e => {
+      const addBtn = e.target.closest('[data-add-date]');
+      if (addBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        openEditor({ date: addBtn.dataset.addDate });
+        return;
+      }
+
+      const editLink = e.target.closest('[data-edit-id]');
+      if (editLink) {
+        e.preventDefault();
+        openEditor({ id: editLink.dataset.editId });
+        return;
+      }
+
+      const entry = e.target.closest('.entry[data-id]');
+      if (entry) {
+        e.preventDefault();
+        openEditor({ id: entry.dataset.id });
+        return;
+      }
+
+      const day = e.target.closest('.day[data-date]');
+      if (day && (e.target === day || e.target.closest('.empty-day'))) {
+        openEditor({ date: day.dataset.date });
+      }
+    });
+
+    // Drag & Drop
+    let dragId = null;
+    document.body.addEventListener('dragstart', e => {
+      const entry = e.target.closest('.entry[data-id]');
+      if (!entry) return;
+      dragId = entry.dataset.id;
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', dragId); } catch (err) {}
+      entry.classList.add('is-dragging');
+    });
+    document.body.addEventListener('dragend', e => {
+      const entry = e.target.closest('.entry[data-id]');
+      if (entry) entry.classList.remove('is-dragging');
+      document.querySelectorAll('.day.is-drag-over').forEach(d => d.classList.remove('is-drag-over'));
+      dragId = null;
+    });
+    document.body.addEventListener('dragover', e => {
+      const day = e.target.closest('.day[data-date]');
+      if (!day || !dragId) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.day.is-drag-over').forEach(d => { if (d !== day) d.classList.remove('is-drag-over'); });
+      day.classList.add('is-drag-over');
+    });
+    document.body.addEventListener('dragleave', e => {
+      const day = e.target.closest('.day[data-date]');
+      if (!day) return;
+      // Only remove when leaving the day entirely
+      const related = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('.day[data-date]');
+      if (related !== day) day.classList.remove('is-drag-over');
+    });
+    document.body.addEventListener('drop', e => {
+      const day = e.target.closest('.day[data-date]');
+      if (!day || !dragId) return;
+      e.preventDefault();
+      day.classList.remove('is-drag-over');
+      const entry = state.entries.find(x => x.id === dragId);
+      if (!entry) return;
+      if (entry.date === day.dataset.date) return;
+      entry.date = day.dataset.date;
+      saveState();
+      renderAll();
+      toast('Verschoben auf ' + fmtDateShort(entry.date));
+    });
+
+    // Toolbar: + Neuer Beitrag, Reset
+    document.querySelector('[data-action="add"]').addEventListener('click', () => {
+      // default to next available Friday this week, otherwise today
+      const monday = getMondayOf(TODAY);
+      const friday = addDays(monday, 4);
+      const def = friday >= TODAY ? friday : TODAY;
+      openEditor({ date: fmtIso(def) });
+    });
+    document.querySelector('[data-action="reset"]').addEventListener('click', () => {
+      if (!confirm('Alle Änderungen verwerfen und auf den Notion-Snapshot zurücksetzen?')) return;
+      state = { entries: clone(DEFAULT_ENTRIES) };
+      saveState();
+      renderAll();
+      toast('Auf Notion-Snapshot zurückgesetzt');
+    });
+
+    // Filter chips (visual only)
+    document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+    }));
+
+    // ⌘K focus search
+    const search = document.querySelector('.search input');
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (search) search.focus();
+      }
+      if (e.key === 'Escape' && document.activeElement === search) search.blur();
+    });
+
+    // Initial render — replace static HTML with rendered version
+    renderAll();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 
