@@ -709,6 +709,43 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   font-weight: 600;
 }
 
+/* Per-channel mini chips on entry cards */
+.entry-chips {
+  display: inline-flex;
+  gap: 3px;
+  margin-top: 4px;
+}
+.ch-mini {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0;
+  width: 18px;
+  height: 18px;
+  line-height: 16px;
+  text-align: center;
+  border: 1px solid var(--rule-soft);
+  color: var(--muted-soft);
+  background: transparent;
+  display: inline-block;
+}
+.ch-mini--draft {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.ch-mini--planned {
+  color: var(--paper);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.ch-mini--done {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 1px;
+}
+
 /* ===========================================================
    INTERACTIVE CALENDAR — edit/drag affordances
    =========================================================== */
@@ -940,6 +977,60 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   text-transform: uppercase;
   color: var(--muted-soft);
   margin-top: 6px;
+}
+
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--rule-faint);
+  border-bottom: 1px solid var(--rule-faint);
+  padding: 12px 0;
+}
+.status-row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+.status-channel {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.status-opts {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.status-opt {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border: 1px solid var(--rule-soft);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.status-opt:hover { color: var(--ink); border-color: var(--rule); }
+.status-opt.is-active { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.status-opt.is-active[data-status="geplant"],
+.status-opt.is-active[data-status="published"] {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .status-row { grid-template-columns: 1fr; gap: 4px; }
+  .status-channel { font-size: 10px; }
+  .status-opt { padding: 5px 8px; font-size: 9.5px; }
 }
 
 .editor-foot {
@@ -1944,99 +2035,8 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       <h3 class="rubrik-title" id="r2">Vom Funken bis zum Druck</h3>
       <p class="rubrik-deck">Alle Einträge aus den Notion-Datenquellen — getaggt als <em>Substack-Artikel</em> oder <em>Homepage-Infografik</em>.</p>
 
-      <div class="drafts">
-        <article class="draft">
-          <span class="draft-tag draft-tag--substack">Substack</span>
-          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
-          <h4 class="draft-title">🆕 <em>Black Box.</em></h4>
-          <span class="draft-meta">Die KI hat eine geheime Regel</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--infografik">Infografik</span>
-          <span class="draft-eyebrow">Reflexion</span>
-          <h4 class="draft-title">AI Literacy ist kein Tool-Training</h4>
-          <span class="draft-meta">720 Wörter · LinkedIn Hoch</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--substack">Substack</span>
-          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
-          <h4 class="draft-title">🆕 Bist du noch <em>Bewerter:in</em> oder schon <em>Lektor:in?</em></h4>
-          <span class="draft-meta">KI-Glättung als Bewertungs-Frage</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--infografik">Infografik</span>
-          <span class="draft-eyebrow">Anatomie</span>
-          <h4 class="draft-title">«Anatomie eines guten Prompts»</h4>
-          <span class="draft-meta">280 Wörter · LinkedIn Hoch</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--substack">Substack</span>
-          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
-          <h4 class="draft-title">🆕 Hört auf zu fragen, ob <em>KI</em> in den Unterricht gehört</h4>
-          <span class="draft-meta">Provokante These — Hauptartikel</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--infografik">Infografik</span>
-          <span class="draft-eyebrow">Eltern</span>
-          <h4 class="draft-title">Der KI-Elternabend — das 60-Minuten-Format</h4>
-          <span class="draft-meta">270 Wörter · LinkedIn Hoch</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--substack">Substack</span>
-          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
-          <h4 class="draft-title">🆕 <em>KI-Tribunal.</em></h4>
-          <span class="draft-meta">Klasse als Anwaltsteam</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--infografik">Infografik</span>
-          <span class="draft-eyebrow">Statistik</span>
-          <h4 class="draft-title">«+48 % / -17 % / +127 %» — Bastani-RCT in drei Zahlen</h4>
-          <span class="draft-meta">280 Wörter · LinkedIn Hoch</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--substack">Substack</span>
-          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
-          <h4 class="draft-title">🆕 Drei Dinge, die <em>KI</em> mit Lehrpersonen macht</h4>
-          <span class="draft-meta">Über die wir nicht reden</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--infografik">Infografik</span>
-          <span class="draft-eyebrow">Saisonal · Mi</span>
-          <h4 class="draft-title">Sommerferien-Vorbereitung — <em>7 KI-Aufgaben für Juli</em></h4>
-          <span class="draft-meta">280 Wörter · LinkedIn Hoch</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--substack">Substack</span>
-          <span class="draft-eyebrow">Hauptartikel · Methoden</span>
-          <h4 class="draft-title">Was meine 9. Klasse heimlich mit <em>ChatGPT</em> macht</h4>
-          <span class="draft-meta">Klassenumfrage · Selbstversuch</span>
-        </article>
-
-        <article class="draft">
-          <span class="draft-tag draft-tag--infografik">Infografik</span>
-          <span class="draft-eyebrow">Methode</span>
-          <h4 class="draft-title">Schul-KI-Konzept in <em>6 Schritten</em></h4>
-          <span class="draft-meta">A4 Portrait · Reif</span>
-        </article>
-      </div>
-
-      <div class="drafts-foot">
-        <span class="drafts-foot-counts">
-          <span><span class="count-dot is-substack"></span>13 Substack</span>
-          <span><span class="count-dot is-infografik"></span>10 Infografik</span>
-        </span>
-        <span>23 Einträge gesamt · <a href="https://www.notion.so/f4550ee42f264b1e85684557650086c5" target="_blank" rel="noopener">Alle in Notion öffnen <span>→</span></a></span>
-      </div>
+      <div class="drafts" id="drafts-grid"></div>
+      <div class="drafts-foot" id="drafts-foot"></div>
     </section>
 
     <!-- =================== RUBRIK 03 — KANÄLE =================== -->
@@ -2293,34 +2293,59 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
     <div class="form-row form-row--inline">
       <div>
-        <label class="form-label" for="f-date">Datum</label>
-        <input type="date" class="form-date" id="f-date" name="date" required>
+        <label class="form-label" for="f-date">Geplant für</label>
+        <input type="date" class="form-date" id="f-date" name="date">
       </div>
       <div>
-        <label class="form-label" for="f-content">Format / Inhalt</label>
-        <input type="text" class="form-input" id="f-content" name="contentType" placeholder="z. B. Hauptartikel" maxlength="80">
+        <label class="form-label">Content-Typ</label>
+        <div class="form-pills" data-group="contentType">
+          <button type="button" class="form-pill" data-value="Hauptartikel">Hauptartikel</button>
+          <button type="button" class="form-pill" data-value="Infografik">Infografik</button>
+        </div>
       </div>
     </div>
 
     <div class="form-row">
-      <label class="form-label">Hauptkanal</label>
-      <div class="form-pills" data-group="channel">
-        <button type="button" class="form-pill" data-value="Substack">Substack</button>
-        <button type="button" class="form-pill" data-value="LinkedIn">LinkedIn</button>
-        <button type="button" class="form-pill" data-value="Instagram">Instagram</button>
-        <button type="button" class="form-pill" data-value="Homepage">Homepage</button>
+      <label class="form-label">Status pro Kanal</label>
+      <div class="status-grid" id="status-grid">
+        <div class="status-row" data-channel="Substack">
+          <span class="status-channel">Substack</span>
+          <div class="status-opts">
+            <button type="button" class="status-opt" data-status="idee">💡 Idee</button>
+            <button type="button" class="status-opt" data-status="entwurf">✍️ Entwurf</button>
+            <button type="button" class="status-opt" data-status="geplant">📅 Geplant</button>
+            <button type="button" class="status-opt" data-status="published">🚀 Veröffentlicht</button>
+          </div>
+        </div>
+        <div class="status-row" data-channel="LinkedIn">
+          <span class="status-channel">LinkedIn</span>
+          <div class="status-opts">
+            <button type="button" class="status-opt" data-status="idee">💡 Idee</button>
+            <button type="button" class="status-opt" data-status="entwurf">✍️ Entwurf</button>
+            <button type="button" class="status-opt" data-status="geplant">📅 Geplant</button>
+            <button type="button" class="status-opt" data-status="published">🚀 Veröffentlicht</button>
+          </div>
+        </div>
+        <div class="status-row" data-channel="Instagram">
+          <span class="status-channel">Instagram</span>
+          <div class="status-opts">
+            <button type="button" class="status-opt" data-status="idee">💡 Idee</button>
+            <button type="button" class="status-opt" data-status="entwurf">✍️ Entwurf</button>
+            <button type="button" class="status-opt" data-status="geplant">📅 Geplant</button>
+            <button type="button" class="status-opt" data-status="published">🚀 Veröffentlicht</button>
+          </div>
+        </div>
+        <div class="status-row" data-channel="Homepage">
+          <span class="status-channel">Homepage</span>
+          <div class="status-opts">
+            <button type="button" class="status-opt" data-status="idee">💡 Idee</button>
+            <button type="button" class="status-opt" data-status="entwurf">✍️ Entwurf</button>
+            <button type="button" class="status-opt" data-status="geplant">📅 Geplant</button>
+            <button type="button" class="status-opt" data-status="published">🚀 Veröffentlicht</button>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="form-row">
-      <label class="form-label">Cross-Posts</label>
-      <div class="form-pills" data-group="secondary">
-        <button type="button" class="form-pill" data-value="Substack">Substack</button>
-        <button type="button" class="form-pill" data-value="LinkedIn">LinkedIn</button>
-        <button type="button" class="form-pill" data-value="Instagram">Instagram</button>
-        <button type="button" class="form-pill" data-value="Homepage">Homepage</button>
-      </div>
-      <p class="form-help">Optional — Kanäle, auf denen der Beitrag zusätzlich erscheint.</p>
+      <p class="form-help">Idee → Entwurf → Geplant → Veröffentlicht. Geplant/Veröffentlicht zählen für die Ampel.</p>
     </div>
 
     <div class="editor-foot">
@@ -2342,16 +2367,83 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   /* =====================================================
      CONFIG & STATE
      ===================================================== */
-  const STORAGE_KEY = 'pausenbrot-redaktion-v1';
+  const STORAGE_KEY = 'pausenbrot-redaktion-v2';
   const CHANNELS = ['Substack', 'LinkedIn', 'Instagram', 'Homepage'];
+  const STATUSES = ['idee', 'entwurf', 'geplant', 'published'];
+  const STATUS_LABEL = { idee: 'Idee', entwurf: 'Entwurf', geplant: 'Geplant', published: 'Veröffentlicht' };
+  const STATUS_EMOJI = { idee: '💡', entwurf: '✍️', geplant: '📅', published: '🚀' };
   const WEEKS_TO_SHOW = 4;
+  const PLANNED_SET = new Set(['geplant', 'published']);
 
-  // Default snapshot (matches the static HTML on initial load)
+  // Helper to build status object compactly
+  function st(s, l, i, h) { return { Substack: s, LinkedIn: l, Instagram: i, Homepage: h }; }
+  function allIdee() { return st('idee','idee','idee','idee'); }
+  function allDraftLi() { return st('idee','entwurf','idee','idee'); }
+
+  // Default snapshot from Notion Content-Übersicht (50 entries)
   const DEFAULT_ENTRIES = [
-    { id: 'n1', date: '2026-05-08', channel: 'Substack', secondary: [],            contentType: 'Hauptartikel', title: 'Prompt Battle' },
-    { id: 'n2', date: '2026-05-18', channel: 'Homepage', secondary: ['LinkedIn'],  contentType: 'Infografik',   title: 'Eltern ins Boot holen — der Stufenplan' },
-    { id: 'n3', date: '2026-05-22', channel: 'Substack', secondary: ['LinkedIn'],  contentType: 'Hauptartikel', title: 'Was meine 9. Klasse heimlich mit ChatGPT macht' }
+    // Dated — appear on calendar
+    { id: 'n1', notionId: '3557ef2a-f219-8100-a698-d304ff686588', title: 'KI als Antwortmaschine vs. Sokratischer Coach', date: '2026-05-06', contentType: 'Infografik', statuses: st('published','published','published','published') },
+    { id: 'n2', notionId: '3457ef2a-f219-8127-9cd8-fe977c0679e8', title: 'Prompt Battle', date: '2026-05-08', contentType: 'Hauptartikel', statuses: st('published','published','published','published') },
+    { id: 'n3', notionId: '3557ef2a-f219-8117-a83d-e32d3e193370', title: 'Wie die KI deine Klasse zum Hypothesenbilden zwingt', date: '2026-05-15', contentType: 'Hauptartikel', statuses: st('geplant','geplant','idee','idee') },
+    { id: 'n4', notionId: '3557ef2a-f219-81d1-ad6e-e354ae39ace3', title: 'Eltern ins Boot holen — der Stufenplan, wenn KI in die Schule kommt', date: '2026-05-18', contentType: 'Infografik', statuses: st('geplant','geplant','idee','geplant') },
+    { id: 'n5', notionId: '3557ef2a-f219-8146-928d-c0d4b78ac275', title: '3 KI-Methoden, die bei mir geflopt sind', date: '2026-05-20', contentType: 'Infografik', statuses: st('geplant','geplant','idee','geplant') },
+    { id: 'n6', notionId: '3557ef2a-f219-8199-833c-f3e09c1e64b1', title: 'Was meine 9. Klasse heimlich mit ChatGPT macht', date: '2026-05-22', contentType: 'Hauptartikel', statuses: st('geplant','geplant','idee','idee') },
+    // Undated — Entwurf-Pool (Pipeline)
+    { id: 'p7',  notionId: '3557ef2a-f219-8106-a829-ecbb400932c7', title: 'KI für Output oder für den Lernprozess: Wo wir die Bremse ziehen müssen', date: null, contentType: 'Infografik', statuses: st('idee','geplant','idee','idee') },
+    { id: 'p8',  notionId: '3587ef2a-f219-81eb-98bf-c8c21eda7c8e', title: 'AI Literacy ist kein Tool-Training', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p9',  notionId: '3557ef2a-f219-813a-b3cd-da856a6f1d83', title: 'KI-freie Phasen als didaktischer Gewinn', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p10', notionId: '3557ef2a-f219-812a-b649-c28d30bf6b9d', title: '«KI hilft / KI schadet — die 2x2-Matrix»', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p11', notionId: '3557ef2a-f219-812c-b164-f5ee4fec6bba', title: 'Der KI-Elternabend — das 60-Minuten-Format', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p12', notionId: '3557ef2a-f219-815e-92dd-d720a4527366', title: 'Schul-KI-Konzept in 6 Schritten', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p13', notionId: '3557ef2a-f219-81f9-9ed8-fd3d192002b8', title: '«+48 % / -17 % / +127 % — Bastani-RCT in drei Zahlen»', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p14', notionId: '3557ef2a-f219-818b-86b5-dc52e7909083', title: 'Wann ich der Klasse die KI WEGNEHME', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p15', notionId: '3557ef2a-f219-8171-a0d1-e2692063f818', title: 'KI-Lerncoach für Lernende — 5 bewährte Lerntechniken', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p16', notionId: '3557ef2a-f219-8164-bc55-d5455bb4bd82', title: 'Erlaubt vs. verboten in der KI-Eingabe', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p17', notionId: '3557ef2a-f219-814a-9076-e717faea642a', title: '«Anatomie eines guten Prompts»', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p18', notionId: '3557ef2a-f219-8171-9289-ceae0c608c35', title: 'Drei Hausaufgaben, die KI NICHT lösen kann', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p19', notionId: '3557ef2a-f219-8147-a164-f47d12959cff', title: '«Sommerferien-Vorbereitung als Lehrperson — 7 KI-Aufgaben für Juli»', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p20', notionId: '3557ef2a-f219-81d1-a9fc-cca4471bea85', title: 'Bewegungsanalyse mit KI — fünf Strichfiguren statt Klassenfoto', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p21', notionId: '3557ef2a-f219-811b-bae0-d9d3f6c8d930', title: '«KI-Kompetenz-Pass für die Sek 1 — Verstehen, Anwenden, Reflektieren, Mitgestalten»', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p22', notionId: '3557ef2a-f219-8197-87bc-dcd5cc69dd6e', title: 'Drei Aufgaben, die nur entstehen, wenn KI im Spiel ist', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p23', notionId: '3557ef2a-f219-8146-b552-ecdacfc8b248', title: 'Wenn die KI deine eigenen Notizen besser kennt als du', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p24', notionId: '3557ef2a-f219-8128-9d4c-dd12932a83a7', title: 'Wahrscheinlichkeit lernen mit dem KI-Würfelsimulator', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p25', notionId: '3557ef2a-f219-81b4-9f80-ccb9db9ad3f3', title: '22 von 23 Lernenden nutzen KI', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p26', notionId: '3557ef2a-f219-8190-8af7-e541e63a9232', title: 'KI-Detektor = Snake-Oil 2026', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p27', notionId: '3557ef2a-f219-8175-a8ef-fd3560890ada', title: 'Wenn Lernende KI gegen mich einsetzen', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p28', notionId: '3557ef2a-f219-81fc-a35f-c073d5d77394', title: 'Aufgaben im KI-Zeitalter — Falck-Planungsvorlage adaptiert für Sek 1', date: null, contentType: 'Infografik', statuses: allDraftLi() },
+    { id: 'p29', notionId: '3587ef2a-f219-816d-b71c-f8610dabf237', title: 'Hört auf zu fragen, ob KI in den Unterricht gehört', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p30', notionId: '3587ef2a-f219-8186-adb2-fbe9a89798fa', title: 'KI-Tribunal.', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p31', notionId: '3557ef2a-f219-81fd-8c0c-f9bf20b0de37', title: 'Was die KI nicht weiss — und warum das gut ist', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p32', notionId: '3557ef2a-f219-8140-b55d-f88dd99b25ba', title: 'KI-Detektoren = Snake-Oil 2026', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p33', notionId: '3587ef2a-f219-81f5-b973-d6689f6d266e', title: 'Was Schulen lernen müssen, BEVOR sie ChatGPT-Lizenzen kaufen', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p34', notionId: '3557ef2a-f219-81c8-8862-dd298d94fba5', title: 'Was du mit KI über die Klasse nicht teilen darfst', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p35', notionId: '3557ef2a-f219-8108-abb9-c74f77bd4a4e', title: 'Pilot «Eine Woche mit KI»', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p36', notionId: '3557ef2a-f219-8171-ab5f-d9840599f4f8', title: 'Pilot «Lehrerzimmer-Streit» (KI macht dumm)', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p37', notionId: '3587ef2a-f219-819f-a55c-c9b0ac527e9f', title: 'Quellenkollision.', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p38', notionId: '3557ef2a-f219-8106-ae67-d30302c6722e', title: 'Reader-Battle Pilot', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p39', notionId: '3587ef2a-f219-813f-ba54-c748b71ff3a1', title: 'Mein KI-Stack für 6 Wochen Bio: vier Werkzeuge, vier Aufgaben', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p40', notionId: '3557ef2a-f219-819c-9463-edede446bc69', title: 'Pilot «Was die Forschung sagt» (Bastani)', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p41', notionId: '3587ef2a-f219-8191-aa15-ed86cffab782', title: 'Drei Dinge, die KI mit Lehrpersonen macht — und über die wir nicht reden', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p42', notionId: '3587ef2a-f219-816e-b105-c232987d4dc6', title: 'Bias-Detektiv.', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p43', notionId: '3557ef2a-f219-8188-bf1c-f246a0d3f8db', title: 'Bewerbungsbriefe mit KI korrigieren', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p44', notionId: '3587ef2a-f219-811c-8c06-c46d5898008b', title: 'Wenn der Plan auf die Klasse trifft: KI als Plan-Stresstest', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p45', notionId: '3557ef2a-f219-811e-91c9-d8df2c0dd7ca', title: 'Drei KI-Methoden, die bei mir gefloppt sind', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p46', notionId: '3557ef2a-f219-8191-9c3f-c6edb492d4d5', title: 'Klassenfoto-Bewegungsanalyse mit KI', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p47', notionId: '3557ef2a-f219-8191-816f-dbee5abb2cc0', title: 'KI als SSG-Vorbereitung', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p48', notionId: '3557ef2a-f219-817d-b36f-e554a9a635f4', title: 'Stundenplan-Vertretung mit KI', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p49', notionId: '3557ef2a-f219-81b4-98a9-dc61abfa766b', title: 'UNICEF-Leitlinie für Sek-Alltag', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() },
+    { id: 'p50', notionId: '3587ef2a-f219-8121-87a0-ee303e3c04a4', title: 'Bist du noch Bewerter:in oder schon Lektor:in?', date: null, contentType: 'Hauptartikel', statuses: allDraftLi() }
   ];
+
+  // Migrate old v1 entries (channel + secondary) to v2 (statuses object)
+  function migrateEntry(e) {
+    if (e.statuses) return e;
+    const statuses = { Substack: 'idee', LinkedIn: 'idee', Instagram: 'idee', Homepage: 'idee' };
+    if (e.channel && statuses[e.channel] !== undefined) statuses[e.channel] = 'geplant';
+    (e.secondary || []).forEach(c => { if (statuses[c] !== undefined) statuses[c] = 'geplant'; });
+    return { id: e.id, title: e.title, date: e.date || null, contentType: e.contentType || null, statuses };
+  }
 
   // Anchor "today" — uses real date, but if no entries match the visible window
   // and DEFAULTs are present, anchor to 2026-05-07 so the snapshot stays sensible
@@ -2362,7 +2454,18 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (parsed && Array.isArray(parsed.entries)) return parsed;
+        if (parsed && Array.isArray(parsed.entries)) {
+          parsed.entries = parsed.entries.map(migrateEntry);
+          return parsed;
+        }
+      }
+      // Also try old v1 storage for migration
+      const oldRaw = localStorage.getItem('pausenbrot-redaktion-v1');
+      if (oldRaw) {
+        const oldParsed = JSON.parse(oldRaw);
+        if (oldParsed && Array.isArray(oldParsed.entries)) {
+          return { entries: oldParsed.entries.map(migrateEntry) };
+        }
       }
     } catch (e) { /* fall through */ }
     return { entries: clone(DEFAULT_ENTRIES) };
@@ -2415,28 +2518,42 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
      RENDERING
      ===================================================== */
   function ampelInfo(entry) {
-    const all = new Set([entry.channel].concat(entry.secondary || []).filter(c => CHANNELS.includes(c)));
-    const count = all.size;
+    const s = entry.statuses || {};
+    const planned = CHANNELS.filter(c => PLANNED_SET.has(s[c]));
+    const count = planned.length;
     let cls, label, title;
-    if (count >= 4)      { cls = 's-amp-green';  label = '4 / 4 Kanäle'; title = 'Vollständig — auf allen vier Kanälen geplant'; }
-    else if (count >= 2) { cls = 's-amp-yellow'; label = count + ' / 4 Kanäle'; title = 'Teilweise — fehlt auf ' + (4 - count) + ' Kanal' + (4 - count === 1 ? '' : 'en'); }
-    else                 { cls = 's-amp-red';    label = '1 / 4 Kanäle'; title = 'Einzelkanal — nur auf ' + (entry.channel || 'einem Kanal') + ' geplant'; }
+    if (count >= 4)      { cls = 's-amp-green';  label = '4 / 4 geplant'; title = 'Vollständig — auf allen vier Kanälen geplant oder veröffentlicht'; }
+    else if (count >= 1) { cls = 's-amp-yellow'; label = count + ' / 4 geplant'; title = 'Teilweise — ' + planned.join(', ') + ' geplant, fehlt auf ' + (4 - count) + ' Kanal' + (4 - count === 1 ? '' : 'en'); }
+    else                 { cls = 's-amp-red';    label = 'Noch nirgends geplant'; title = 'Rot — alle vier Kanäle noch in Idee/Entwurf'; }
     return { cls, label, title, count };
   }
 
+  function chipClassFor(status) {
+    if (status === 'published') return 'ch-mini ch-mini--done';
+    if (status === 'geplant')   return 'ch-mini ch-mini--planned';
+    if (status === 'entwurf')   return 'ch-mini ch-mini--draft';
+    return 'ch-mini';
+  }
+  const CH_LETTER = { Substack: 'S', LinkedIn: 'L', Instagram: 'I', Homepage: 'H' };
+
+  function renderChannelChips(entry) {
+    const s = entry.statuses || {};
+    return '<div class="entry-chips">' + CHANNELS.map(c => {
+      const st = s[c] || 'idee';
+      const label = STATUS_EMOJI[st] + ' ' + c + ': ' + STATUS_LABEL[st];
+      return '<span class="' + chipClassFor(st) + '" title="' + escapeHtml(label) + '">' + CH_LETTER[c] + '</span>';
+    }).join('') + '</div>';
+  }
+
   function renderEntry(e) {
-    const eyebrow = e.contentType ? e.channel + ' · ' + e.contentType : e.channel;
-    const sec = (e.secondary || []).filter(c => CHANNELS.includes(c) && c !== e.channel);
-    const multi = sec.length
-      ? '<span class="entry-multi">+ ' + sec.map(c => '<b>' + escapeHtml(c) + '</b>').join(' &middot; ') + '</span>'
-      : '';
+    const eyebrow = e.contentType || '';
     const amp = ampelInfo(e);
     return '' +
       '<div class="entry" draggable="true" data-id="' + escapeHtml(e.id) + '" tabindex="0" role="button" aria-label="Beitrag bearbeiten: ' + escapeHtml(e.title) + '">' +
-        '<span class="entry-channel">' + escapeHtml(eyebrow) + '</span>' +
+        (eyebrow ? '<span class="entry-channel">' + escapeHtml(eyebrow) + '</span>' : '') +
         '<h4 class="entry-title">' + escapeHtml(e.title) + '</h4>' +
+        renderChannelChips(e) +
         '<span class="entry-status ' + amp.cls + '" title="' + escapeHtml(amp.title) + '"><span class="dot-status"></span>' + amp.label + '</span>' +
-        multi +
       '</div>';
   }
 
@@ -2502,8 +2619,8 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   function nextEntryFor(channel) {
     const todayIso = fmtIso(TODAY);
     const upcoming = state.entries
-      .filter(e => e.date >= todayIso)
-      .filter(e => e.channel === channel || (e.secondary || []).includes(channel))
+      .filter(e => e.date && e.date >= todayIso)
+      .filter(e => PLANNED_SET.has((e.statuses || {})[channel]))
       .sort((a, b) => a.date.localeCompare(b.date));
     return upcoming[0] || null;
   }
@@ -2511,8 +2628,8 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   function countFor(channel) {
     const todayIso = fmtIso(TODAY);
     return state.entries
-      .filter(e => e.date >= todayIso)
-      .filter(e => e.channel === channel || (e.secondary || []).includes(channel))
+      .filter(e => e.date && e.date >= todayIso)
+      .filter(e => PLANNED_SET.has((e.statuses || {})[channel]))
       .length;
   }
 
@@ -2573,7 +2690,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
     root.innerHTML = upcoming.map(e => {
       const d = new Date(e.date + 'T00:00:00');
-      const eyebrow = e.contentType ? e.channel + ' · ' + e.contentType : e.channel;
+      const eyebrow = e.contentType || 'Beitrag';
       const kw = 'KW ' + getISOWeek(d);
       const amp = ampelInfo(e);
       return ''
@@ -2586,6 +2703,7 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
           + '<div class="cal-body">'
             + '<span class="cal-channel">' + escapeHtml(eyebrow) + '</span>'
             + '<h4 class="cal-title">' + escapeHtml(e.title) + '</h4>'
+            + renderChannelChips(e)
             + '<span class="entry-status ' + amp.cls + '" title="' + escapeHtml(amp.title) + '"><span class="dot-status"></span>' + amp.label + '</span>'
             + '<a class="cal-cta" href="#" data-edit-id="' + escapeHtml(e.id) + '">Bearbeiten <span>→</span></a>'
           + '</div>'
@@ -2595,12 +2713,11 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
   function renderStats() {
     const todayIso = fmtIso(TODAY);
-    const planned = state.entries.filter(e => e.date >= todayIso);
-    const next = planned.sort((a,b) => a.date.localeCompare(b.date))[0];
+    const planned = state.entries.filter(e => e.date && e.date >= todayIso);
+    const next = planned.slice().sort((a,b) => a.date.localeCompare(b.date))[0];
     const channelsActive = new Set();
     planned.forEach(e => {
-      channelsActive.add(e.channel);
-      (e.secondary || []).forEach(c => channelsActive.add(c));
+      CHANNELS.forEach(c => { if (PLANNED_SET.has((e.statuses || {})[c])) channelsActive.add(c); });
     });
 
     const set = (sel, num, trend) => {
@@ -2628,11 +2745,65 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
     }
   }
 
+  function renderDrafts() {
+    const root = document.getElementById('drafts-grid');
+    const foot = document.getElementById('drafts-foot');
+    if (!root) return;
+
+    // Show all entries except those fully published
+    const drafts = state.entries.filter(e => {
+      const s = e.statuses || {};
+      return CHANNELS.some(c => s[c] !== 'published');
+    });
+
+    // Sort: dated first asc, then undated alphabetically
+    drafts.sort((a, b) => {
+      if (a.date && b.date) return a.date.localeCompare(b.date);
+      if (a.date && !b.date) return -1;
+      if (!a.date && b.date) return 1;
+      return (a.title || '').localeCompare(b.title || '');
+    });
+
+    let substackCount = 0;
+    let infografikCount = 0;
+    drafts.forEach(e => {
+      if (e.contentType === 'Hauptartikel') substackCount++;
+      else if (e.contentType === 'Infografik') infografikCount++;
+    });
+
+    root.innerHTML = drafts.map(e => {
+      const isInfografik = e.contentType === 'Infografik';
+      const isHauptartikel = e.contentType === 'Hauptartikel';
+      const tagClass = isInfografik ? 'draft-tag--infografik' : 'draft-tag--substack';
+      const tagLabel = isInfografik ? 'Infografik' : (isHauptartikel ? 'Substack' : 'Beitrag');
+      const eyebrow = e.date ? fmtDateShort(e.date) : 'Ohne Datum';
+      const amp = ampelInfo(e);
+      return ''
+        + '<article class="draft" data-id="' + escapeHtml(e.id) + '" data-edit-id="' + escapeHtml(e.id) + '">'
+          + '<span class="draft-tag ' + tagClass + '">' + tagLabel + '</span>'
+          + '<span class="draft-eyebrow">' + escapeHtml(eyebrow) + '</span>'
+          + '<h4 class="draft-title">' + escapeHtml(e.title) + '</h4>'
+          + renderChannelChips(e)
+          + '<span class="draft-meta entry-status ' + amp.cls + '"><span class="dot-status"></span>' + amp.label + '</span>'
+        + '</article>';
+    }).join('');
+
+    if (foot) {
+      foot.innerHTML = ''
+        + '<span class="drafts-foot-counts">'
+          + '<span><span class="count-dot is-substack"></span>' + substackCount + ' Substack</span>'
+          + '<span><span class="count-dot is-infografik"></span>' + infografikCount + ' Infografik</span>'
+        + '</span>'
+        + '<span>' + drafts.length + ' Einträge · <a href="https://www.notion.so/35c7ef2af21981078454c402daaee03b" target="_blank" rel="noopener">Content-Übersicht in Notion <span>→</span></a></span>';
+    }
+  }
+
   function renderAll() {
     renderCalendar();
     renderChannels();
     renderTeaser();
     renderStats();
+    renderDrafts();
   }
 
   /* =====================================================
@@ -2646,21 +2817,27 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
     const isEdit = !!opts.id;
     const entry = isEdit
       ? state.entries.find(e => e.id === opts.id)
-      : { id: '', date: opts.date || fmtIso(TODAY), channel: opts.channel || 'Substack', secondary: [], title: '', contentType: '' };
+      : { id: '', date: opts.date || '', contentType: '', title: '', statuses: allIdee() };
 
     if (!entry) return;
 
     form.querySelector('#f-title').value = entry.title || '';
-    form.querySelector('#f-date').value = entry.date;
-    form.querySelector('#f-content').value = entry.contentType || '';
+    form.querySelector('#f-date').value = entry.date || '';
 
-    form.querySelectorAll('[data-group="channel"] .form-pill').forEach(p => {
-      const active = p.dataset.value === entry.channel;
-      p.classList.toggle('is-active', active);
-      p.classList.toggle('is-primary', active);
+    // Content-Typ pills
+    form.querySelectorAll('[data-group="contentType"] .form-pill').forEach(p => {
+      p.classList.toggle('is-active', p.dataset.value === entry.contentType);
+      p.classList.toggle('is-primary', p.dataset.value === entry.contentType);
     });
-    form.querySelectorAll('[data-group="secondary"] .form-pill').forEach(p => {
-      p.classList.toggle('is-active', (entry.secondary || []).includes(p.dataset.value));
+
+    // Per-channel status pills
+    const statuses = entry.statuses || allIdee();
+    form.querySelectorAll('.status-row').forEach(row => {
+      const ch = row.dataset.channel;
+      const current = statuses[ch] || 'idee';
+      row.querySelectorAll('.status-opt').forEach(opt => {
+        opt.classList.toggle('is-active', opt.dataset.status === current);
+      });
     });
 
     form.dataset.entryId = entry.id || '';
@@ -2681,18 +2858,22 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
   function readForm() {
     const fd = new FormData(form);
-    const channelPill = form.querySelector('[data-group="channel"] .form-pill.is-active');
-    const channel = channelPill ? channelPill.dataset.value : 'Substack';
-    const secondary = Array.from(form.querySelectorAll('[data-group="secondary"] .form-pill.is-active'))
-      .map(p => p.dataset.value)
-      .filter(c => c !== channel);
+    const ctPill = form.querySelector('[data-group="contentType"] .form-pill.is-active');
+    const contentType = ctPill ? ctPill.dataset.value : '';
+
+    const statuses = {};
+    CHANNELS.forEach(c => { statuses[c] = 'idee'; });
+    form.querySelectorAll('.status-row').forEach(row => {
+      const ch = row.dataset.channel;
+      const active = row.querySelector('.status-opt.is-active');
+      if (active) statuses[ch] = active.dataset.status;
+    });
 
     return {
       title: (fd.get('title') || '').toString().trim(),
-      date: (fd.get('date') || '').toString(),
-      contentType: (fd.get('contentType') || '').toString().trim(),
-      channel,
-      secondary
+      date: (fd.get('date') || '').toString() || null,
+      contentType,
+      statuses
     };
   }
 
@@ -2715,18 +2896,25 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   function init() {
     // Pill toggles
     overlay.addEventListener('click', e => {
+      // Status-opt: only one per row
+      const opt = e.target.closest('.status-opt');
+      if (opt) {
+        const row = opt.closest('.status-row');
+        if (row) row.querySelectorAll('.status-opt').forEach(o => o.classList.remove('is-active'));
+        opt.classList.add('is-active');
+        return;
+      }
+      // Content-Typ: only one
       const pill = e.target.closest('.form-pill');
       if (!pill) return;
       const group = pill.parentElement.dataset.group;
-      if (group === 'channel') {
+      if (group === 'contentType') {
         pill.parentElement.querySelectorAll('.form-pill').forEach(p => {
           p.classList.remove('is-active');
           p.classList.remove('is-primary');
         });
         pill.classList.add('is-active');
         pill.classList.add('is-primary');
-      } else if (group === 'secondary') {
-        pill.classList.toggle('is-active');
       }
     });
 
